@@ -1,8 +1,7 @@
 import { FiPhone, FiMail as FiEmail, FiMapPin } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import Button from './Button';
 import { footerMenus, socialLinks } from '../constants/items';
-import { Container } from './index';
+import { Container, Button } from './index';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (
@@ -68,7 +67,7 @@ const Footer = () => {
                 placeholder="Enter your email"
                 className="flex-1 px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:border-indigo-500 transition-colors duration-300"
               />
-              <Button type="submit">Subscribe</Button>
+              <Button className='' type="submit">Subscribe</Button>
             </div>
 
             <div>

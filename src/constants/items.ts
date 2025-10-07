@@ -1,9 +1,12 @@
 import {
+  FaCog,
   FaFacebook,
   FaGithub,
   FaInstagram,
   FaLinkedin,
+  FaLock,
   FaTwitter,
+  FaUser,
   FaYoutube,
 } from 'react-icons/fa';
 import {
@@ -106,6 +109,13 @@ export const contactMethods = [
     contact: 'Available 9AM-6PM EST',
     action: '#chat',
   },
+];
+
+
+export const sidebarMenu = [
+  { id: "profile", label: "User Profile", icon: FaUser },
+  { id: "change-password", label: "Change Password", icon: FaLock },
+  // { id: "update-account", label: "Update Account", icon: FaCog },
 ];
 
 export const faqData: FAQItem[] = [

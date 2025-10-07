@@ -1,64 +1,98 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import InputField from '../componets/InputField';
-import { BiLock, BiMailSend } from 'react-icons/bi';
-import Button from '../componets/Button';
-import { FiUserPlus } from 'react-icons/fi';
-import { register } from '../api/authService';
-import { handleError, handleSuccess } from '../utils/toastHandler';
-import { registerUserSchema } from '../validations/userValidation';
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import InputField from "../componets/InputField";
+import { BiLock, BiMailSend } from "react-icons/bi";
+import Button from "../componets/Button";
+import { FiUserPlus } from "react-icons/fi";
+import { register } from "../api/authService";
+import { handleError, handleSuccess } from "../utils/toastHandler";
+import { registerUserSchema } from "../validations/userValidation";
+
+export interface FormDataType {
+  fullName: string;
+  email: string;
+  password: string;
+  avatar?: File | null;
+}
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    fullName: '',
+  const [formData, setFormData] = useState<FormDataType>({
+    fullName: "",
+    email: "",
+    password: "",
+    avatar: null,
   });
 
-  const navigate = useNavigate();
-  const [errors, setErrors] = useState({ email: '', password: '', fullName: '' });
-  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<FormDataType>({
+    fullName: "",
+    email: "",
+    password: "",
+    avatar: null,
+  });
 
-  const handleChange = (e: string) => (value: string) => {
-    setFormData(prev => ({ ...prev, [e]: value }));
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleChange = (field: keyof FormDataType) => (value: string, e?: React.ChangeEvent<HTMLInputElement>) => {
+    if (field === "avatar" && e?.target.files && e.target.files.length > 0) {
+      setFormData((prev) => ({ ...prev, avatar: e.target.files![0] }));
+    } else {
+      setFormData((prev) => ({ ...prev, [field]: value }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
 
     try {
-      const { email, password, fullName } = registerUserSchema.parse(formData);
+      const validatedData: FormDataType = registerUserSchema.parse({
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+      });
 
-      const data = await register(fullName, email, password);
+      if (!formData.avatar || formData.avatar.size === 0) {
+        handleError("Please upload an avatar");
+        return;
+      }
 
-      handleSuccess(data.message);
 
-      setFormData({ email: '', password: '', fullName: '' });
-      setErrors({ email: '', password: '', fullName: '' });
-      navigate('/login');
+      setLoading(true);
+      const data = new FormData();
+      data.append("fullName", validatedData.fullName);
+      data.append("email", validatedData.email);
+      data.append("password", validatedData.password);
+      data.append("avatar", formData.avatar);
+
+      const res = await register(data);
+      handleSuccess(res.message);
+
+      setFormData({ fullName: "", email: "", password: "", avatar: null });
+      setErrors({ fullName: "", email: "", password: "", avatar: null });
+
+      navigate("/login");
+
     } catch (err: any) {
-      if (err instanceof Error && 'issues' in err) {
-        const zodError = err as any;
+      if (err.name === "ZodError") {
         const fieldErrors: any = {};
-
-        if (Array.isArray(zodError.issues)) {
-          zodError.issues.forEach((issue: any) => {
+        if (Array.isArray(err.issues)) {
+          err.issues.forEach((issue: any) => {
             if (issue.path?.[0]) fieldErrors[issue.path[0]] = issue.message;
           });
         }
-
-        setErrors(fieldErrors);
-      } else {
-        handleError(err);
+        setErrors((prev) => ({ ...prev, ...fieldErrors }));
+        return;
       }
-    } finally {
+
+      handleError(err?.response?.data?.message || "Registration failed");
+    }
+    finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center  py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-md w-full space-y-8">
         <div>
           <div className="flex justify-center">
@@ -70,7 +104,7 @@ const Register = () => {
             Sign up to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Or
+            Or{" "}
             <Link
               to="/login"
               className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
@@ -88,7 +122,7 @@ const Register = () => {
               label="Full name"
               placeholder="Enter full name"
               value={formData.fullName}
-              onChange={handleChange('fullName')}
+              onChange={handleChange("fullName")}
               error={errors.fullName}
               icon={<BiMailSend />}
             />
@@ -98,29 +132,36 @@ const Register = () => {
               name="email"
               label="Email address"
               placeholder="Enter your email"
-              value={formData?.email}
-              onChange={handleChange('email')}
+              value={formData.email}
+              onChange={handleChange("email")}
               error={errors.email}
               icon={<BiMailSend />}
             />
 
             <InputField
-              name="password"
+              type="file"
+              name="avatar"
+              label="Avatar"
+              accept="image/*"
+              onChange={handleChange("avatar")}
+            />
+
+            <InputField
               type="password"
+              name="password"
               label="Password"
               placeholder="Enter your password"
-              value={formData?.password}
-              onChange={handleChange('password')}
+              value={formData.password}
+              onChange={handleChange("password")}
               error={errors.password}
               icon={<BiLock />}
             />
           </div>
-
           <div>
             <Button
               isLoading={loading}
               type="submit"
-              className="w-full  flex items-center justify-center py-2.5 space-x-2 rounded-md text-sm"
+              className="w-full flex items-center justify-center py-2.5 space-x-2 rounded-md text-sm"
             >
               <FiUserPlus size={16} />
               <span>Sign Up</span>

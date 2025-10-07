@@ -10,18 +10,20 @@ import {
 } from 'react-icons/bi';
 import { BsEye, BsInfo } from 'react-icons/bs';
 import { FiEyeOff } from 'react-icons/fi';
+import { MdFileUpload } from "react-icons/md";
 
 export interface InputProps {
   type?:
-    | 'text'
-    | 'email'
-    | 'password'
-    | 'number'
-    | 'tel'
-    | 'url'
-    | 'search'
-    | 'date'
-    | 'credit-card';
+  | 'text'
+  | 'email'
+  | 'password'
+  | 'number'
+  | 'tel'
+  | 'url'
+  | 'search'
+  | 'date'
+  | 'file'
+  | 'credit-card';
   placeholder?: string;
   value?: string;
   onChange?: (value: string, e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -32,6 +34,7 @@ export interface InputProps {
   className?: string;
   name?: string;
   id?: string;
+  accept?: string;
   helperText?: string;
   icon?: React.ReactNode;
   variant?: 'default' | 'filled' | 'outlined';
@@ -50,6 +53,7 @@ const InputField: React.FC<InputProps> = ({
   className = '',
   name,
   id,
+  accept,
   helperText,
   icon,
   variant = 'default',
@@ -57,10 +61,6 @@ const InputField: React.FC<InputProps> = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const inputId = id || name || `input-${Math.random().toString(36).substr(2, 9)}`;
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange?.(e.target.value, e);
-  };
 
   const getIcon = () => {
     if (icon) return icon;
@@ -78,6 +78,8 @@ const InputField: React.FC<InputProps> = ({
         return <BiCalendar className="text-gray-400" />;
       case 'credit-card':
         return <BiCreditCard className="text-gray-400" />;
+      case 'file':
+        return <MdFileUpload className="text-gray-700" />;
       default:
         return <BiUser className="text-gray-400" />;
     }
@@ -120,8 +122,15 @@ const InputField: React.FC<InputProps> = ({
           type={getInputType()}
           id={inputId}
           name={name}
-          value={value}
-          onChange={handleChange}
+          accept={accept || 'image*'}
+          value={type === "file" ? undefined : value}
+          onChange={(e) => {
+            if (type === "file") {
+              onChange?.("", e);
+            } else {
+              onChange?.(e.target.value, e);
+            }
+          }}
           placeholder={placeholder}
           disabled={disabled}
           required={required}

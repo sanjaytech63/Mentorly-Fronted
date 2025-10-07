@@ -11,24 +11,24 @@ import {
   NotFound,
 } from './pages';
 import { Navbar, Footer } from './componets';
+import Dashboard from './componets/Dashboard';
 const AppRoutes = () => (
   <Router>
     <div className="App">
       <Navbar />
-      <main className="pt-20">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/help" element={<Help />} />
-          <Route path="/faq" element={<Faq />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<Home />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/help" element={<Help />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/" element={<Home />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/profile" element={<Dashboard />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
       <Footer />
     </div>
   </Router>

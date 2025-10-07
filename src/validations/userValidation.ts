@@ -25,5 +25,16 @@ export const loginUserSchema = z.object({
     .max(50, { message: 'Password must be less than 50 characters' }),
 });
 
+// --- Update Profile Schema ---
+export const updatePfofileSchema = z.object({
+  email: z.string().email({ message: 'Invalid email address' }),
+
+  fullName: z
+    .string()
+    .min(2, { message: 'Full name must be at least 2 characters' })
+    .max(50, { message: 'Full name must be less than 50 characters' }),
+});
+
 export type RegisterUserInput = z.infer<typeof registerUserSchema>;
+export type UpdateProfileInput = z.infer<typeof updatePfofileSchema>;
 export type LoginUserInput = z.infer<typeof loginUserSchema>;

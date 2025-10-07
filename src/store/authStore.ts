@@ -1,14 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { logoutUser } from '../api/authService';
 
 interface AuthState {
   user: any | null;
   accessToken: string | null;
-  // refreshToken: string | null;
+  refreshToken:  null;
   setUser: (user: any) => void;
-  // setTokens: (access: string, refresh: string) => void;
   setTokens: (access: string, refresh: string) => void;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -18,10 +18,16 @@ export const useAuthStore = create<AuthState>()(
       accessToken: null,
       refreshToken: null,
       setUser: user => set({ user }),
-      // setTokens: (access, refresh) => set({ accessToken: access, refreshToken: refresh }),
-      setTokens: (access, refresh) => set({ accessToken: access }),
-      // logout: () => set({ user: null, accessToken: null, refreshToken: null }),
-      logout: () => set({ user: null, accessToken: null }),
+      setTokens: (access) => set({ accessToken: access }),
+      logout: async () => {
+        try {
+          await logoutUser();
+        } catch (err) {
+          console.error('Error logging out:', err);
+        } finally {
+          set({ user: null, accessToken: null, refreshToken: null });
+        }
+      },
     }),
     { name: 'auth-storage' }
   )

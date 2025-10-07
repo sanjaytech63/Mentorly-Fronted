@@ -24,13 +24,13 @@ const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses =
-    'font-medium rounded-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer flex items-center justify-center';
+    'font-medium rounded-md transition-all duration-300  cursor-pointer flex items-center justify-center';
 
   const variants = {
     primary:
-      'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transform',
+      'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform',
     secondary:
-      'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 shadow-sm hover:shadow-md',
+      'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400',
     outline: 'border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white',
     ghost: 'text-gray-700 hover:text-blue-600 hover:bg-gray-100',
   };
