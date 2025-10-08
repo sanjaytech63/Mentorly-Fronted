@@ -28,7 +28,7 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div
-      className={`bg-white rounded-lg shadow-md  ${hoverClass} ${className}`}
+      className={`bg-white rounded-2xl shadow-md  ${hoverClass} ${className}`}
     >
       {title && (
         <div className="border-b border-gray-200 px-6 py-4">
