@@ -2,7 +2,9 @@ import axios, { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } fro
 import { useAuthStore } from "../store/authStore";
 
 const api = axios.create({
-  baseURL: "https://sanjay-boost-backend.onrender.com",
+  // baseURL: "http://localhost:8080/api/v1",
+  baseURL: "https://sanjay-boost-backend.onrender.com/api/v1",
+
   withCredentials: true,
 });
 
