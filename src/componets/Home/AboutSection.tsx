@@ -5,7 +5,7 @@ import BlogForm from '../BlogForm';
 const AboutSection: React.FC = () => {
   return (
     <section className="bg-[#F9F9FB] py-16 sm:py-20">
-      <BlogForm />
+      {/* <BlogForm /> */}
       <Container>
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between w-full gap-16">
           <div className=" transition-transform duration-300 flex-1 hover:scale-105 ">
