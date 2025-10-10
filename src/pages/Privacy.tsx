@@ -1,10 +1,10 @@
 import React from 'react';
-import { Container } from '../componets/index';
+import { Container } from '../index';
 import { sections } from '../constants/items';
 
 const Privacy: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 pb-16">
+    <div className="min-h-screen bg-gray-50  py-28">
       <Container size="small">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Privacy Policy</h1>

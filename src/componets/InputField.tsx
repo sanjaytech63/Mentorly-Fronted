@@ -10,20 +10,20 @@ import {
 } from 'react-icons/bi';
 import { BsEye, BsInfo } from 'react-icons/bs';
 import { FiEyeOff } from 'react-icons/fi';
-import { MdFileUpload } from "react-icons/md";
+import { MdFileUpload } from 'react-icons/md';
 
 export interface InputProps {
   type?:
-  | 'text'
-  | 'email'
-  | 'password'
-  | 'number'
-  | 'tel'
-  | 'url'
-  | 'search'
-  | 'date'
-  | 'file'
-  | 'credit-card';
+    | 'text'
+    | 'email'
+    | 'password'
+    | 'number'
+    | 'tel'
+    | 'url'
+    | 'search'
+    | 'date'
+    | 'file'
+    | 'credit-card';
   placeholder?: string;
   value?: string;
   onChange?: (value: string, e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -123,10 +123,10 @@ const InputField: React.FC<InputProps> = ({
           id={inputId}
           name={name}
           accept={accept || 'image*'}
-          value={type === "file" ? undefined : value}
-          onChange={(e) => {
-            if (type === "file") {
-              onChange?.("", e);
+          value={type === 'file' ? undefined : value}
+          onChange={e => {
+            if (type === 'file') {
+              onChange?.('', e);
             } else {
               onChange?.(e.target.value, e);
             }

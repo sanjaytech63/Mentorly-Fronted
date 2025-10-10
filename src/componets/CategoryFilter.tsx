@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from './index';
+import { Button } from '../index';
 
 export interface CategoryFilterProps {
   categories: string[];
@@ -14,7 +14,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
 }) => {
   return (
     <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
-      {categories.map((category) => (
+      {categories.map(category => (
         <Button
           key={category}
           variant={activeCategory === category ? 'primary' : 'secondary'}

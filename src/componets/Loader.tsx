@@ -24,7 +24,7 @@ const Loader: React.FC<LoaderProps> = ({ size = 'small', className = '', label =
     <div className={`flex items-center justify-center ${className}`}>
       <div className="flex items-center space-x-2">
         <FiLoader size={iconSizes[size]} className={`${sizes[size]} animate-spin text-current`} />
-        <span>{label}</span>
+        <span className={`${className}`}>{label}</span>
       </div>
     </div>
   );

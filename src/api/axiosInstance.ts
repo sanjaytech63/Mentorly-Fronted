@@ -1,12 +1,15 @@
-import axios, { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
-import { useAuthStore } from "../store/authStore";
+import axios, { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
+import { useAuthStore } from '../store/authStore';
 
 const api = axios.create({
-  // baseURL: "http://localhost:8080/api/v1",
-  baseURL: "https://sanjay-boost-backend.onrender.com/api/v1",
-
+  baseURL: 'http://localhost:8080/api/v1',
   withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
+
+// console.log("Base URL:", import.meta.env.VITE_API_BASE_URL as string);
 
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const token = useAuthStore.getState().accessToken;
@@ -17,10 +20,13 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 });
 
 let isRefreshing = false;
-let failedQueue: { resolve: (value?: unknown) => void; reject: (reason?: any) => void }[] = [];
+let failedQueue: {
+  resolve: (value?: unknown) => void;
+  reject: (reason?: any) => void;
+}[] = [];
 
 const processQueue = (error: unknown, token: string | null = null) => {
-  failedQueue.forEach((prom) => {
+  failedQueue.forEach(prom => {
     if (error) prom.reject(error);
     else prom.resolve(token);
   });
@@ -28,16 +34,25 @@ const processQueue = (error: unknown, token: string | null = null) => {
 };
 
 api.interceptors.response.use(
-  (res) => res,
+  response => response,
   async (error: AxiosError) => {
     const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
-    const { accessToken, refreshToken, setTokens, logout } = useAuthStore.getState();
+    const { refreshToken, setTokens, logout } = useAuthStore.getState();
 
-    if (originalRequest.url?.includes("/auth/login") || originalRequest.url?.includes("/auth/register")) {
+    if (
+      originalRequest.url?.includes('/auth/login') ||
+      originalRequest.url?.includes('/auth/register') ||
+      originalRequest.url?.includes('/auth/logout')
+    ) {
       return Promise.reject(error);
     }
 
     if (error.response?.status === 401 && !originalRequest._retry) {
+      if (!refreshToken) {
+        logout();
+        return Promise.reject(error);
+      }
+
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({
@@ -55,11 +70,15 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const { data } = await api.post("/auth/refresh-token", { refreshToken });
-        const newAccessToken = data.accessToken;
+        const { data } = await api.post('/auth/refresh-token', { refreshToken });
 
-        setTokens(newAccessToken, "");
+        const newAccessToken = data.accessToken;
+        const newRefreshToken = data.refreshToken;
+
+        setTokens(newAccessToken, newRefreshToken);
+
         api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+
         processQueue(null, newAccessToken);
 
         if (originalRequest.headers)

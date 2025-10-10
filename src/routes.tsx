@@ -9,12 +9,13 @@ import {
   Privacy,
   ProtectedRoute,
   NotFound,
-} from './pages';
-import { Navbar, Footer } from './componets';
+} from './index';
+import { Navbar, Footer, NetworkStatusBanner } from './index';
 import Dashboard from './componets/Dashboard';
 const AppRoutes = () => (
   <Router>
     <div className="App">
+      <NetworkStatusBanner />
       <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />

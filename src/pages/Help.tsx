@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiSearch } from 'react-icons/fi';
-import { Container, Button, InputField } from '../componets/index';
-import { contactMethods, helpCategories } from '../constants/items';
+import { Container, Button, InputField } from '../index';
+import { helpCategories } from '../constants/items';
 
 const Help: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 pb-16">
+    <div className="min-h-screen bg-gray-50 py-28">
       <Container>
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">How can we help you?</h1>

@@ -27,9 +27,7 @@ const Card: React.FC<CardProps> = ({
   const hoverClass = hover ? 'hover:shadow-lg transition-shadow duration-200' : '';
 
   return (
-    <div
-      className={`bg-white rounded-2xl shadow-md  ${hoverClass} ${className}`}
-    >
+    <div className={`bg-white rounded-2xl shadow-md  ${hoverClass} ${className}`}>
       {title && (
         <div className="border-b border-gray-200 px-6 py-4">
           <h3 className="text-lg font-semibold text-gray-800">{title}</h3>

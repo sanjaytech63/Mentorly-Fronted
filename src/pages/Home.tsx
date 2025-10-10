@@ -1,4 +1,14 @@
-import { AboutSection, Courses, FeaturesSection, HeroSection, LogoMarquee, Newsletter, Stats, Workshop } from '../componets/index';
+import {
+  AboutSection,
+  Courses,
+  FeaturesSection,
+  HeroSection,
+  LogoMarquee,
+  NewsBlog,
+  Newsletter,
+  Stats,
+  Workshop,
+} from '../index';
 const Home = () => {
   return (
     <div className="min-h-screen">
@@ -9,7 +19,8 @@ const Home = () => {
       <Courses />
       <Workshop />
       <Stats />
-      <Newsletter/>
+      <Newsletter />
+      <NewsBlog />
     </div>
   );
 };

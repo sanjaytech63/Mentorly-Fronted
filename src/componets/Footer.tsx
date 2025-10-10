@@ -1,7 +1,7 @@
 import { FiPhone, FiMail as FiEmail, FiMapPin } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { footerMenus, socialLinks } from '../constants/items';
-import { Container, Button } from './index';
+import { Container, Button, Logo } from '../index';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (
@@ -9,11 +9,8 @@ const Footer = () => {
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 mb-12">
           <div className="lg:col-span-2">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-2xl">S</span>
-              </div>
-              <h3 className="text-2xl font-bold">SANJAY</h3>
+            <div className="mb-6">
+              <Logo />
             </div>
             <p className="text-gray-400 mb-6 leading-relaxed">
               Creating beautiful and functional web experiences. Specializing in modern web
@@ -67,7 +64,9 @@ const Footer = () => {
                 placeholder="Enter your email"
                 className="flex-1 px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:border-indigo-500 transition-colors duration-300"
               />
-              <Button className='' type="submit">Subscribe</Button>
+              <Button className="" type="submit">
+                Subscribe
+              </Button>
             </div>
 
             <div>

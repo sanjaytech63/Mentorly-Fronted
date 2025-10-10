@@ -12,14 +12,14 @@ const Rating: React.FC<RatingProps> = ({
   rating,
   reviewCount,
   showReviewCount = true,
-  size = 'md'
+  size = 'md',
 }) => {
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating % 1 >= 0.5;
 
   const sizeClasses = {
     sm: 'text-sm',
-    md: 'text-base'
+    md: 'text-base',
   };
 
   return (

@@ -11,7 +11,7 @@ export interface Course {
   students: number;
   icon?: string;
   badge?: string;
-  image:string;
+  image: string;
   iconType?: 'ai' | 'cloud' | 'code' | 'chart' | 'design' | 'business';
 }
 

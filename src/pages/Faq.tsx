@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { FiSearch, FiPlus, FiMinus } from 'react-icons/fi';
-import { Container } from '../componets/index';
+import { Container, Button } from '../index';
 import { categories, faqData } from '../constants/items';
-import { Button } from '../componets/index';
 
 const Faq: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -24,7 +23,7 @@ const Faq: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 pb-16">
+    <div className="min-h-screen bg-gray-50 py-28">
       <Container>
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h1>

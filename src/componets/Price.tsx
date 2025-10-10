@@ -6,24 +6,20 @@ export interface PriceProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-const Price: React.FC<PriceProps> = ({ 
-  originalPrice, 
-  discountedPrice, 
-  size = 'md' 
-}) => {
+const Price: React.FC<PriceProps> = ({ originalPrice, discountedPrice, size = 'md' }) => {
   const sizeClasses = {
     sm: {
       original: 'text-lg',
-      discounted: 'text-base'
+      discounted: 'text-base',
     },
     md: {
       original: 'text-xl',
-      discounted: 'text-lg'
+      discounted: 'text-lg',
     },
     lg: {
       original: 'text-2xl',
-      discounted: 'text-xl'
-    }
+      discounted: 'text-xl',
+    },
   };
 
   const formatPrice = (price: number) => `$${price.toFixed(2)}`;

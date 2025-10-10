@@ -28,11 +28,10 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      
       setLoading(true);
       const { email, password } = loginUserSchema.parse(formData);
 
-      const response = await login(email, password);
+      const response: any = await login(email, password);
       const { user } = response.data;
 
       const accessToken = response.data.accessToken;
@@ -46,7 +45,6 @@ const Login = () => {
       setFormData({ email: '', password: '' });
       setErrors({ email: '', password: '' });
       navigate('/');
-
     } catch (err) {
       if (err instanceof Error && 'issues' in err) {
         const zodError = err as any;
@@ -80,7 +78,7 @@ const Login = () => {
             Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Or{" "}
+            Or{' '}
             <Link
               to="/register"
               className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
