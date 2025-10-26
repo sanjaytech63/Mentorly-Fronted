@@ -1,13 +1,12 @@
-import { FaCalendar, FaClock, FaUser } from 'react-icons/fa';
+import { FaClock, FaUser } from 'react-icons/fa';
 import Card from './Card';
 import { NewsCardProps } from '../types/newsTypes';
 import Button from './Button';
-import { FiArrowRight } from 'react-icons/fi';
+import { FiArrowRight, FiCalendar } from 'react-icons/fi';
+import { formatDate, getBadgeColor, getCategoryLabel, getReadTimeNumber } from '../utils';
+import { Link } from 'react-router-dom';
 
-const NewsCard: React.FC<NewsCardProps> = ({ news, onReadMore }) => {
-  const handleReadMore = () => {
-    onReadMore?.(news.id);
-  };
+const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
 
   return (
     <Card
@@ -17,44 +16,54 @@ const NewsCard: React.FC<NewsCardProps> = ({ news, onReadMore }) => {
       <div className="relative w-full mb-4">
         <img src={news.image} alt={news.title} className="w-full h-48 object-cover rounded-xl" />
         {news.badge && (
-          <span className="absolute top-2 right-2 bg-indigo-600 text-white/90 text-xs font-medium px-2.5 py-1 rounded-full whitespace-nowrap">
+          <span className="absolute top-2 right-2 capitalize bg-indigo-600 text-white/90 text-xs font-medium px-2.5 py-1 rounded-full whitespace-nowrap">
             {news.badge}
           </span>
         )}
       </div>
 
       <div className="flex justify-between items-center mb-3">
-        <p className="text-xs bg-[#F1EEFF] text-indigo-600 font-semibold px-4 py-1.5 rounded-full">
-          {news.category}
-        </p>
-        <div className="flex items-center space-x-1 text-gray-500 text-sm">
-          <FaCalendar className="text-gray-400" />
-          <span>{news.date}</span>
+        {news.category && (
+          <div className="">
+            <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full border ${getBadgeColor(news.category)}`}>
+              {getCategoryLabel(news.category)}
+            </span>
+          </div>
+        )}
+        <div className="text-xs text-gray-500">
+          <div className="flex items-center space-x-1 ">
+            <FiCalendar size={12} />
+            <span>{formatDate(news.createdAt)}</span>
+          </div>
         </div>
       </div>
 
-      <h3 className="font-semibold text-gray-900 text-lg leading-tight line-clamp-2 mb-2">
-        {news.title}
-      </h3>
+      <Link to={`/blogs/${news.id}`}>
+        <h3 className="font-semibold text-gray-900 text-lg hover:text-indigo-600 hover:underline leading-tight line-clamp-2 mb-2">
+          {news.title}
+        </h3>
+      </Link>
 
       <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 flex-1 mb-4">
         {news.description}
       </p>
 
       <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center capitalize space-x-2">
           <FaUser className="text-gray-400" />
           <span>by {news.author}</span>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-1 text-xs">
           <FaClock className="text-gray-400" />
-          <span>{news.readTime}</span>
+          <span>{getReadTimeNumber(news.readTime)} min read</span>
         </div>
       </div>
-
-      <Button className=" py-3 w-full">
-        <span>Read More</span> <FiArrowRight />
-      </Button>
+      
+      <Link to={`/blogs/${news.id}`}>
+        <Button className=" py-3 w-full">
+          <span>Read More</span> <FiArrowRight />
+        </Button>
+      </Link>
     </Card>
   );
 };

@@ -54,22 +54,21 @@ const Sidebar = ({ activeTab, setActiveTab }: SidebarProps) => {
             {sidebarMenu?.map(item => {
               const IconComponent = item.icon;
               return (
-                <button
+                <div
                   key={item.id}
                   onClick={() => {
                     setActiveTab(item.id);
                     setOpen(false);
                   }}
                   className={`flex items-center cursor-pointer space-x-2 pl-2 py-2 rounded-md text-sm font-medium transition-all duration-300 group
-                                ${
-                                  activeTab === item.id
-                                    ? 'text-indigo-600 bg-indigo-50 font-semibold'
-                                    : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-100'
-                                }`}
+                                ${activeTab === item.id
+                      ? 'text-indigo-600 bg-indigo-50 font-semibold'
+                      : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-100'
+                    }`}
                 >
                   <IconComponent size={15} />
                   <span>{item.label}</span>
-                </button>
+                </div>
               );
             })}
           </nav>

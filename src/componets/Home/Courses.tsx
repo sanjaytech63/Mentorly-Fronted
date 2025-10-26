@@ -68,9 +68,8 @@ const defaultCourses: Course[] = [
     reviewCount: 44,
     duration: '06h 20m',
     students: 22,
-    icon: 'AI',
     badge: 'Regiment',
-    iconType: 'ai',
+    discountedPrice:2000
   },
   {
     id: '2',

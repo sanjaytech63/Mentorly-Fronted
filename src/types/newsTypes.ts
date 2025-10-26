@@ -3,12 +3,13 @@ export interface NewsItem {
   title: string;
   description: string;
   image: string;
-  date: string;
   author: string;
   category: string;
   readTime: string;
   badge?: string;
   featured?: boolean;
+  createdAt?: any
+  blog?: any
 }
 
 export interface NewsCardProps {

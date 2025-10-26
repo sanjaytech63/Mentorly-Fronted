@@ -90,7 +90,7 @@ const Profile = () => {
           alt={user?.fullName}
           loading="lazy"
           onClick={handleImageClick}
-          className="w-20 h-20 rounded-full cursor-pointer object-cover border-2 border-indigo-500 shadow-sm"
+          className="w-20 h-20 rounded-full cursor-pointer object-fit border-2 border-indigo-500 shadow-sm"
         />
 
         {avatarLoading && (

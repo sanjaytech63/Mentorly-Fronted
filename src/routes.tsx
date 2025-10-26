@@ -12,6 +12,7 @@ import {
 } from './index';
 import { Navbar, Footer, NetworkStatusBanner } from './index';
 import Dashboard from './componets/Dashboard';
+import BlogDetails from './componets/Home/BlogDetails';
 const AppRoutes = () => (
   <Router>
     <div className="App">
@@ -25,6 +26,7 @@ const AppRoutes = () => (
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/" element={<Home />} />
+        <Route path="/blogs/:id" element={<BlogDetails />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/profile" element={<Dashboard />} />
         </Route>

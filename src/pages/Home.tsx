@@ -9,6 +9,7 @@ import {
   Stats,
   Workshop,
 } from '../index';
+
 const Home = () => {
   return (
     <div className="min-h-screen">

@@ -42,7 +42,9 @@ export const logoutUser = async (): Promise<void> => {
   return response.data;
 };
 
-export const createBlogs = async (formData: RegisterData): Promise<AuthResponse> => {
-  const { data } = await api.post('/blogs/create', formData);
+export const createBlogs = async (formData: FormData): Promise<AuthResponse> => {
+  const { data } = await api.post('/blogs/create', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
   return data;
 };
