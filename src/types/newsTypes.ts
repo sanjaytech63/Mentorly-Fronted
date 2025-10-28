@@ -10,6 +10,7 @@ export interface NewsItem {
   featured?: boolean;
   createdAt?: any
   blog?: any
+  slug?:string
 }
 
 export interface NewsCardProps {

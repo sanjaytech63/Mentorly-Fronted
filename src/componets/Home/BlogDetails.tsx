@@ -8,9 +8,9 @@ import { ErrorState } from '../ErrorState';
 import { EmptyState } from '../EmptyState';
 
 const BlogDetails: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
+    const { slug } = useParams<{ slug: string }>();
     const navigate = useNavigate();
-    const { blog, loading, error } = useBlogDetails(id || '');
+    const { blog, loading, error } = useBlogDetails(slug || '');
 
     if (loading) {
         return (
@@ -22,16 +22,6 @@ const BlogDetails: React.FC = () => {
         );
     }
 
-    if (!blog) {
-        return (
-            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                <EmptyState
-                    title="No blogs found"
-                />
-            </div>
-        );
-    }
-
     if (error) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
@@ -39,6 +29,14 @@ const BlogDetails: React.FC = () => {
                     error={error || "The blog post you're looking for doesn't exist or has been removed."}
                     onRetry={() => window.location.reload()}
                 />
+            </div>
+        );
+    }
+
+    if (!blog) {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                <EmptyState title="No blogs found" />
             </div>
         );
     }

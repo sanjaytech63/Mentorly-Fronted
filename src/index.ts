@@ -37,6 +37,9 @@ import Newsletter from './componets/Home/Newsletter';
 import NetworkStatusBanner from './componets/NetworkStatusBanner';
 import NewsBlog from './componets/Home/NewsBlog';
 import NewsCard from './componets/NewsCard';
+import Badge from './componets/Badge';
+import SelectField from './componets/SelectField';
+import { Tabs } from './componets/Tab';
 
 export {
   Logo,
@@ -74,4 +77,7 @@ export {
   ProtectedRoute,
   NewsBlog,
   NewsCard,
+  Badge,
+  SelectField,
+  Tabs
 };

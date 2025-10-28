@@ -1,7 +1,11 @@
 import React from 'react';
 import { Button, Container } from '../../index';
+import { useAuth } from '../../hooks/useAuth';
 
 const Workshop = () => {
+
+  const { isAuthenticated, user } = useAuth();
+
   return (
     <section className="bg-white text-gray-900 min-h-[70vh] relative overflow-hidden py-10 md:py-20">
       <Container>

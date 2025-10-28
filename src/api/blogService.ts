@@ -14,8 +14,8 @@ export const getBlogs = async (filters: BlogFilters = {}): Promise<any> => {
   return response.data;
 };
 
-export const getBlogById = async (id: string): Promise<Blog> => {
-  const response = await api.get(`/blogs/${id}`);
+export const getBlogById = async (slugOrId: string): Promise<Blog> => {
+  const response = await api.get(`/blogs/${slugOrId}`);
   return response.data.data;
 };
 

@@ -8,10 +8,12 @@ interface UseBlogDetailsReturn {
     error: string | null;
 }
 
-export const useBlogDetails = (blogId: string): UseBlogDetailsReturn => {
+export const useBlogDetails = (slug: string): UseBlogDetailsReturn => {
     const [blog, setBlog] = useState<Blog | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    if (!slug) return;
 
     useEffect(() => {
         const fetchBlogDetails = async () => {
@@ -19,7 +21,7 @@ export const useBlogDetails = (blogId: string): UseBlogDetailsReturn => {
                 setLoading(true);
                 setError(null);
 
-                const response = await getBlogById(blogId);
+                const response = await getBlogById(slug);
                 setBlog(response);
 
             } catch (err: any) {
@@ -30,10 +32,10 @@ export const useBlogDetails = (blogId: string): UseBlogDetailsReturn => {
             }
         };
 
-        if (blogId) {
+        if (slug) {
             fetchBlogDetails();
         }
-    }, [blogId]);
+    }, [slug]);
 
     return {
         blog,

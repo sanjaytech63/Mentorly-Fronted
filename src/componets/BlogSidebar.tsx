@@ -10,13 +10,13 @@ interface BlogSidebarProps {
 
 export const BlogSidebar: React.FC<BlogSidebarProps> = ({ blog, navigate }) => {
     const { blogsData } = useFetchBlogs();
-    
+
     return (
         <aside className="lg:col-span-1 space-y-6">
             <AuthorInfoCard blog={blog} />
             <RelatedBlogsCard
                 blogs={blogsData}
-                onBlogClick={(blogId) => navigate(`/blogs/${blogId}`)}
+                onBlogClick={(slug) => navigate(`/blog/${slug}`)}
             />
             <BlogStatsCard blog={blog} />
         </aside>

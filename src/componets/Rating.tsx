@@ -3,7 +3,7 @@ import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 
 export interface RatingProps {
   rating: number;
-  reviewCount: number;
+  reviewCount?: number;
   showReviewCount?: boolean;
   size?: 'sm' | 'md';
 }
@@ -40,11 +40,11 @@ const Rating: React.FC<RatingProps> = ({
         {rating.toFixed(1)}
       </span>
 
-      {/* {showReviewCount && (
+      {showReviewCount && (
         <span className={`text-gray-500 text-sm ${sizeClasses[size]}`}>
-          ({reviewCount} Reviews)
+          ({reviewCount})
         </span>
-      )} */}
+      )}
     </div>
   );
 };

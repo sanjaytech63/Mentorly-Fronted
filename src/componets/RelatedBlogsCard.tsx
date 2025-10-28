@@ -4,7 +4,7 @@ import Card from "./Card";
 
 export const RelatedBlogsCard: React.FC<{
     blogs: any[];
-    onBlogClick: (blogId: string) => void;
+    onBlogClick: (slug: string) => void;
 }> = ({ blogs, onBlogClick }) => {
     return (
         <Card padding="md" className="rounded-2xl  border border-gray-200 shadow-none">
@@ -13,7 +13,7 @@ export const RelatedBlogsCard: React.FC<{
                 {blogs.map(blog => (
                     <div
                         key={blog._id}
-                        onClick={() => onBlogClick(blog._id)}
+                        onClick={() => onBlogClick(blog.slug)}
                         className="group cursor-pointer p-3 rounded-lg hover:bg-gray-100 transition-all duration-200 border border-transparent "
                     >
                         <div className="flex space-x-3">

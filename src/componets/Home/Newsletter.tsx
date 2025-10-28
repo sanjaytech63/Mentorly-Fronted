@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Container, InputField } from '../../index';
 import { RiMailSendLine } from 'react-icons/ri';
+import { handleError, handleSuccess } from '../../utils/toastHandler';
+import { subscribeApi } from '../../api/subscribeService';
 
 interface SimpleNewsletterProps {
   title?: string;
@@ -15,6 +17,45 @@ const Newsletter: React.FC<SimpleNewsletterProps> = ({
   placeholder = 'Enter your email address',
   buttonText = 'Subscribe Now',
 }) => {
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const msg: any = await subscribeApi(email);
+      handleSuccess(msg.message || "");
+      setEmail('');
+    } catch (err: any) {
+      handleError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEmailChange = (value: any) => {
+    try {
+      if (value && value.target && value.target.value !== undefined) {
+        setEmail(value.target.value);
+      }
+      else if (typeof value === 'string') {
+        setEmail(value);
+      }
+      else if (value && value.value !== undefined) {
+        setEmail(value.value);
+      }
+      else if (value && value.detail && value.detail.value !== undefined) {
+        setEmail(value.detail.value);
+      }
+      else {
+        console.warn('Unexpected onChange value format:', value);
+      }
+    } catch (error) {
+      console.error('Error handling email change:', error);
+    }
+  };
+
   return (
     <section className="w-full py-20 bg-gradient-to-r from-indigo-600 to-purple-600 text-white relative overflow-hidden">
       <Container>
@@ -33,17 +74,20 @@ const Newsletter: React.FC<SimpleNewsletterProps> = ({
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <form className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-2xl">
+              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-2xl">
                 <InputField
                   type="email"
                   placeholder={placeholder}
                   required
-                  className="flex-1 rounded-lg placeholder:text-gray-900 text-gray-800  text-lg min-w-0 w-full sm:w-auto"
+                  value={email}
+                  onChange={handleEmailChange}
+                  className="flex-1 rounded-lg placeholder:text-gray-900 text-gray-800 text-lg min-w-0 w-full sm:w-auto"
                 />
                 <Button
+                  isLoading={loading}
                   type="submit"
                   variant="secondary"
-                  className="whitespace-nowrap md:w-fit w-auto  py-3 text-lg"
+                  className="whitespace-nowrap md:w-fit w-auto py-3 text-lg"
                 >
                   {buttonText}
                 </Button>

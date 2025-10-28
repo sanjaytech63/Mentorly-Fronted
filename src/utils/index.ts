@@ -41,6 +41,15 @@ export const getCategoryColor = (category: string) => {
     return colors[category as keyof typeof colors] || 'bg-gray-50 text-gray-700 border-gray-200';
 };
 
+export const getLevelColor = (category: string) => {
+    const colors = {
+        beginner: 'bg-blue-50 text-blue-700 border-blue-200',
+        intermediate: 'bg-green-50 text-green-700 border-green-200',
+        advanced: 'bg-purple-50 text-purple-700 border-purple-200',
+    };
+    return colors[category as keyof typeof colors] || 'bg-gray-50 text-gray-700 border-gray-200';
+};
+
 export const categoryOptions = [
     { value: 'frontend', label: 'Frontend Development' },
     { value: 'backend', label: 'Backend Development' },
@@ -58,11 +67,14 @@ export const badgeOptions = [
     { value: 'popular', label: '⭐ Popular' },
     { value: 'featured', label: '🌟 Featured' },
     { value: 'recommended', label: '👍 Recommended' },
-    { value: 'advanced', label: '🚀 Advanced' },
-    { value: 'beginner', label: '🎯 Beginner Friendly' },
-    { value: 'exclusive', label: '💎 Exclusive' },
-    { value: 'updated', label: '🔄 Recently Updated' },
-    { value: 'limited', label: '⏳ Limited Time' },
+];
+
+export const itemsPerPageOptions = [
+    { value: '6', label: '6 per page' },
+    { value: '9', label: '9 per page' },
+    { value: '12', label: '12 per page' },
+    { value: '15', label: '15 per page' },
+    { value: '20', label: '20 per page' },
 ];
 
 export const getCategoryLabel = (value: string): string => {
@@ -73,4 +85,15 @@ export const getCategoryLabel = (value: string): string => {
 export const getBadgeLabel = (value: string): string => {
     const badge = badgeOptions.find(opt => opt.value === value);
     return badge ? badge.label : value;
+};
+
+export const levelOptions = [
+    { value: 'beginner', label: 'Beginner' },
+    { value: 'intermediate', label: 'Intermediate' },
+    { value: 'advanced', label: 'Advanced' },
+];
+
+export const getLevelLabel = (value: string): string => {
+    const level = levelOptions.find(opt => opt.value === value);
+    return level?.label || value;
 };

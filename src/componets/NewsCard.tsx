@@ -7,7 +7,7 @@ import { formatDate, getBadgeColor, getCategoryLabel, getReadTimeNumber } from '
 import { Link } from 'react-router-dom';
 
 const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
-
+    
   return (
     <Card
       padding="sm"
@@ -38,7 +38,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
         </div>
       </div>
 
-      <Link to={`/blogs/${news.id}`}>
+      <Link to={`/blog/${news.slug}`}>
         <h3 className="font-semibold text-gray-900 text-lg hover:text-indigo-600 hover:underline leading-tight line-clamp-2 mb-2">
           {news.title}
         </h3>
@@ -58,8 +58,8 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
           <span>{getReadTimeNumber(news.readTime)} min read</span>
         </div>
       </div>
-      
-      <Link to={`/blogs/${news.id}`}>
+
+      <Link to={`/blog/${news.slug}`}>
         <Button className=" py-3 w-full">
           <span>Read More</span> <FiArrowRight />
         </Button>

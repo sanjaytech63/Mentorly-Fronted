@@ -239,3 +239,7 @@ export const sectionstrems = [
     content: `These Terms shall be governed and construed in accordance with the laws of the United States, without regard to its conflict of law provisions.`,
   },
 ];
+
+
+
+

@@ -5,7 +5,7 @@ interface ButtonProps {
   children: React.ReactNode;
   isLoading?: boolean;
   onClick?: () => void;
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
   size?: 'small' | 'medium' | 'large' | 'xlarge';
   className?: string;
   disabled?: boolean;
@@ -32,6 +32,7 @@ const Button: React.FC<ButtonProps> = ({
     secondary: 'bg-white 0 text-gray-700 ',
     outline: 'border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white',
     ghost: 'text-gray-700 hover:text-blue-600 hover:bg-gray-100',
+    danger: 'border border-red-500 text-red-600 bg-red-500 hover:bg-red-600 text-white'
   };
 
   const sizes = {

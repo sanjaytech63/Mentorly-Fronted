@@ -93,13 +93,14 @@ export interface BlogFilters {
 }
 
 export interface Blog {
-  _id: string;
-  title: string;
-  description: string;
-  image: string;
-  author: string;
-  category: string;
-  readTime?: string;
-  badge?: string;
-  createdAt?: string;
+    _id: string;
+    title: string;
+    description: string;
+    image: string;
+    author: string;
+    category: string;
+    readTime?: string;
+    badge?: string;
+    createdAt?: string;
+    slug?: string,
 }

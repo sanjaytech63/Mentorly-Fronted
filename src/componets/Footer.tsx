@@ -2,8 +2,29 @@ import { FiPhone, FiMail as FiEmail, FiMapPin } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { footerMenus, socialLinks } from '../constants/items';
 import { Container, Button, Logo } from '../index';
+import { useState } from 'react';
+import { subscribeApi } from '../api/subscribeService';
+import { handleError, handleSuccess } from '../utils/toastHandler';
 const Footer = () => {
+
   const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const msg: any = await subscribeApi(email);
+      handleSuccess(msg.message || "");
+      setEmail('');
+    } catch (err: any) {
+      handleError(err.message || "This email is already subscribed to our newsletter");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <footer className="bg-gray-900 text-white pt-16 pb-8">
       <Container>
@@ -58,16 +79,21 @@ const Footer = () => {
               Subscribe to our newsletter for the latest updates.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 mb-8">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:border-indigo-500 transition-colors duration-300"
-              />
-              <Button className="" type="submit">
-                Subscribe
-              </Button>
-            </div>
+            <form onSubmit={handleSubscribe}>
+              <div className="flex flex-col sm:flex-row gap-3 mb-8">
+                <input
+                  value={email}
+                  name='email'
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:border-indigo-500 transition-colors duration-300"
+                />
+                <Button isLoading={loading} type="submit">
+                  Subscribe
+                </Button>
+              </div>
+            </form>
 
             <div>
               <h5 className="text-lg font-semibold mb-4 text-white">Follow Us</h5>

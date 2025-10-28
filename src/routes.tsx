@@ -13,6 +13,9 @@ import {
 import { Navbar, Footer, NetworkStatusBanner } from './index';
 import Dashboard from './componets/Dashboard';
 import BlogDetails from './componets/Home/BlogDetails';
+import CourseListingPage from './componets/Listing/CourseListingPage';
+import CourseDetailsPage from './componets/Listing/CourseDetailsPage';
+import ContactPage from './pages/ContactPage';
 const AppRoutes = () => (
   <Router>
     <div className="App">
@@ -26,7 +29,10 @@ const AppRoutes = () => (
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/" element={<Home />} />
-        <Route path="/blogs/:id" element={<BlogDetails />} />
+        <Route path="/blog/:slug" element={<BlogDetails />} />
+        <Route path="/courses" element={<CourseListingPage />} />
+        <Route path="/courses/:id" element={<CourseDetailsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/profile" element={<Dashboard />} />
         </Route>

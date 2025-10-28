@@ -76,6 +76,7 @@ const NewsBlogs: React.FC = () => {
                 category: blog.category,
                 readTime: blog.readTime || "5",
                 badge: blog.badge,
+                slug:blog.slug,
                 createdAt: blog.createdAt,
               }}
             />
