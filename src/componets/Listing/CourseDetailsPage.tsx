@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import {
-  Container,
-  Button,
-  Rating,
-  Badge,
-  Card,
-  Tabs,
-  Loader
-} from '../../index';
+import { Container, Button, Rating, Badge, Card, Tabs, Loader } from '../../index';
 import { getCourseById, getSimilarCourses } from '../../api/course.service';
 import { Course } from '../../types/course.types';
 import {
@@ -23,9 +15,15 @@ import {
   FiArrowLeft,
   FiCheck,
   FiBarChart2,
-  FiArrowRight
+  FiArrowRight,
 } from 'react-icons/fi';
-import { getBadgeColor, getBadgeLabel, getCategoryColor, getLevelColor, getLevelLabel } from '../../utils';
+import {
+  getBadgeColor,
+  getBadgeLabel,
+  getCategoryColor,
+  getLevelColor,
+  getLevelLabel,
+} from '../../utils';
 import CourseCard from '../CourseCard';
 import { BlogHeader } from '../BlogHeader';
 import { handleSuccess } from '../../utils/toastHandler';
@@ -96,18 +94,21 @@ const CourseDetailsPage: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Course Not Found</h2>
-          <p className="text-gray-600 mb-8">{error || 'The course you are looking for does not exist.'}</p>
-          <Button onClick={() => navigate('/courses')}>
-            Browse All Courses
-          </Button>
+          <p className="text-gray-600 mb-8">
+            {error || 'The course you are looking for does not exist.'}
+          </p>
+          <Button onClick={() => navigate('/courses')}>Browse All Courses</Button>
         </div>
       </div>
     );
   }
 
-  const hasDiscount = course.discountedPrice != null && course.discountedPrice < course.originalPrice;
+  const hasDiscount =
+    course.discountedPrice != null && course.discountedPrice < course.originalPrice;
   const discountPercentage = hasDiscount
-    ? Math.round(((course.originalPrice - (course.discountedPrice ?? 0)) / course.originalPrice) * 100)
+    ? Math.round(
+        ((course.originalPrice - (course.discountedPrice ?? 0)) / course.originalPrice) * 100
+      )
     : 0;
 
   return (
@@ -120,15 +121,15 @@ const CourseDetailsPage: React.FC = () => {
           <div className="lg:col-span-2 ">
             {/* Course Header */}
             <div className="bg-white rounded-2xl shadow-sm p-6 mb-6">
-              <div className='flex items-baseline-last justify-between'>
+              <div className="flex items-baseline-last justify-between">
                 <div className="flex flex-wrap items-center capitalize gap-2 mb-4">
                   <Badge variant="primary" className={`${getCategoryColor(course.category)}`}>
                     {course.category}
                   </Badge>
-                  <div className=' hidden md:block'>
+                  <div className=" hidden md:block">
                     <Badge variant="secondary" className={getLevelColor(course.level)}>
-                    {getLevelLabel(course.level)}
-                  </Badge>
+                      {getLevelLabel(course.level)}
+                    </Badge>
                   </div>
                   {course.badge && (
                     <Badge variant="success" className={getBadgeColor(course.badge)}>
@@ -148,20 +149,12 @@ const CourseDetailsPage: React.FC = () => {
                 </div>
               </div>
               <div className="aspect-video rounded-lg overflow-hidden mb-4">
-                <img
-                  src={course.image}
-                  alt={course.title}
-                  className="w-full h-full object-cover"
-                />
+                <img src={course.image} alt={course.title} className="w-full h-full object-cover" />
               </div>
 
-              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                {course.title}
-              </h1>
+              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{course.title}</h1>
 
-              <p className="text-xl text-gray-600 mb-6 leading-relaxed">
-                {course.description}
-              </p>
+              <p className="text-xl text-gray-600 mb-6 leading-relaxed">{course.description}</p>
 
               <div className="flex items-center gap-2 flex-wrap">
                 <div className="flex items-center gap-3">
@@ -240,11 +233,7 @@ const CourseDetailsPage: React.FC = () => {
                   </div>
 
                   <div className="space-y-3">
-                    <Button
-                      onClick={handleEnroll}
-                      className="w-full"
-                      disabled={isEnrolled}
-                    >
+                    <Button onClick={handleEnroll} className="w-full" disabled={isEnrolled}>
                       {isEnrolled ? (
                         <>
                           <FiCheck className="w-5 h-5 mr-2" />
@@ -259,9 +248,7 @@ const CourseDetailsPage: React.FC = () => {
                     </Button>
 
                     <div className="text-center">
-                      <p className="text-sm text-gray-600">
-                        30-day money-back guarantee
-                      </p>
+                      <p className="text-sm text-gray-600">30-day money-back guarantee</p>
                     </div>
                   </div>
 
@@ -297,16 +284,14 @@ const CourseDetailsPage: React.FC = () => {
               <Card className="p-6 border border-gray-200 shadow-none">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-14 h-14 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white text-xl font-bold">
-                    {course.instructor?.[0]?.toUpperCase() || "I"}
+                    {course.instructor?.[0]?.toUpperCase() || 'I'}
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">By {course.instructor}</h3>
                     <p className="text-sm text-gray-600">Course Instructor</p>
                   </div>
                 </div>
-                <Button className="w-full">
-                  View Profile
-                </Button>
+                <Button className="w-full">View Profile</Button>
               </Card>
             </div>
           </div>
@@ -318,10 +303,7 @@ const CourseDetailsPage: React.FC = () => {
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl font-bold text-gray-900">Similar Courses</h2>
               <div className="text-center  flex justify-center">
-                <Button
-                  className="py-3"
-                  onClick={() => navigate('/courses')}
-                >
+                <Button className="py-3" onClick={() => navigate('/courses')}>
                   <span>View All</span>
                   <FiArrowRight />
                 </Button>
@@ -396,26 +378,26 @@ const CurriculumTab: React.FC<{ course: Course }> = ({ course }) => {
   // Mock curriculum data - you would get this from your API
   const sections = [
     {
-      title: "Introduction",
+      title: 'Introduction',
       lectures: 5,
-      duration: "45min",
+      duration: '45min',
       items: [
-        { title: "Welcome to the Course", duration: "5min", type: "video" },
-        { title: "Course Overview", duration: "10min", type: "video" },
-        { title: "Setting Up Environment", duration: "15min", type: "video" },
-        { title: "Introduction Quiz", duration: "15min", type: "quiz" },
-      ]
+        { title: 'Welcome to the Course', duration: '5min', type: 'video' },
+        { title: 'Course Overview', duration: '10min', type: 'video' },
+        { title: 'Setting Up Environment', duration: '15min', type: 'video' },
+        { title: 'Introduction Quiz', duration: '15min', type: 'quiz' },
+      ],
     },
     {
-      title: "Core Concepts",
+      title: 'Core Concepts',
       lectures: 8,
-      duration: "2h 30min",
+      duration: '2h 30min',
       items: [
-        { title: "Understanding Fundamentals", duration: "20min", type: "video" },
-        { title: "Advanced Techniques", duration: "25min", type: "video" },
-        { title: "Practice Exercise", duration: "45min", type: "exercise" },
-      ]
-    }
+        { title: 'Understanding Fundamentals', duration: '20min', type: 'video' },
+        { title: 'Advanced Techniques', duration: '25min', type: 'video' },
+        { title: 'Practice Exercise', duration: '45min', type: 'exercise' },
+      ],
+    },
   ];
 
   return (
@@ -423,7 +405,9 @@ const CurriculumTab: React.FC<{ course: Course }> = ({ course }) => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-xl font-semibold text-gray-900">Course Content</h3>
-          <p className="text-gray-600">{course.lectures} lectures • {course.totalHours} total hours</p>
+          <p className="text-gray-600">
+            {course.lectures} lectures • {course.totalHours} total hours
+          </p>
         </div>
         <Button variant="outline">
           <FiDownload className="w-4 h-4 mr-2" />
@@ -433,7 +417,10 @@ const CurriculumTab: React.FC<{ course: Course }> = ({ course }) => {
 
       <div className="space-y-4">
         {sections.map((section, sectionIndex) => (
-          <Card key={sectionIndex} className="p-0 overflow-hidden border border-gray-200 shadow-none">
+          <Card
+            key={sectionIndex}
+            className="p-0 overflow-hidden border border-gray-200 shadow-none"
+          >
             <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
               <div className="flex items-center justify-between">
                 <h4 className="font-semibold text-gray-900">{section.title}</h4>
@@ -445,12 +432,20 @@ const CurriculumTab: React.FC<{ course: Course }> = ({ course }) => {
 
             <div className="divide-y divide-gray-200">
               {section.items.map((item, itemIndex) => (
-                <div key={itemIndex} className="px-6 py-4 flex items-center justify-between hover:bg-gray-50">
+                <div
+                  key={itemIndex}
+                  className="px-6 py-4 flex items-center justify-between hover:bg-gray-50"
+                >
                   <div className="flex items-center gap-4">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${item.type === 'video' ? 'bg-blue-100 text-blue-600' :
-                      item.type === 'quiz' ? 'bg-purple-100 text-purple-600' :
-                        'bg-green-100 text-green-600'
-                      }`}>
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                        item.type === 'video'
+                          ? 'bg-blue-100 text-blue-600'
+                          : item.type === 'quiz'
+                            ? 'bg-purple-100 text-purple-600'
+                            : 'bg-green-100 text-green-600'
+                      }`}
+                    >
                       {item.type === 'video' && <FiPlay className="w-4 h-4" />}
                       {item.type === 'quiz' && <FiBarChart2 className="w-4 h-4" />}
                       {item.type === 'exercise' && <FiCheck className="w-4 h-4" />}
@@ -476,7 +471,7 @@ const InstructorTab: React.FC<{ course: Course }> = ({ course }) => {
     <div className="space-y-6">
       <div className="flex items-start gap-6">
         <div className="w-20 h-20 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-          {course.instructor?.[0]?.toUpperCase() || "I"}
+          {course.instructor?.[0]?.toUpperCase() || 'I'}
         </div>
         <div className="flex-1">
           <h3 className="text-2xl font-bold text-gray-900 mb-2">{course.instructor}</h3>
@@ -516,6 +511,5 @@ const InstructorTab: React.FC<{ course: Course }> = ({ course }) => {
     </div>
   );
 };
-
 
 export default CourseDetailsPage;

@@ -79,5 +79,5 @@ export {
   NewsCard,
   Badge,
   SelectField,
-  Tabs
+  Tabs,
 };

@@ -16,7 +16,7 @@ const ContactPage: React.FC = () => {
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,20 +26,20 @@ const ContactPage: React.FC = () => {
       icon: '📧',
       title: 'Email Us',
       details: 'sanjaywebdev@gmail.com',
-      description: 'We reply within 24 hours'
+      description: 'We reply within 24 hours',
     },
     {
       icon: '📞',
       title: 'Call Us',
       details: '+91-6376024125',
-      description: 'Mon to Fri, 9AM to 6PM'
+      description: 'Mon to Fri, 9AM to 6PM',
     },
     {
       icon: '📍',
       title: 'Visit Us',
       details: 'Sector 62, Jaipur',
-      description: 'Rajasthan 201309'
-    }
+      description: 'Rajasthan 201309',
+    },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -58,7 +58,7 @@ const ContactPage: React.FC = () => {
   const handleChange = (e: any) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -68,11 +68,10 @@ const ContactPage: React.FC = () => {
       <section className="relative py-26 mt-10 overflow-hidden bg-gradient-to-r from-indigo-600 to-purple-700">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-              Get In Touch
-            </h1>
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">Get In Touch</h1>
             <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              We're here to help you on your learning journey. Reach out to us for any questions about courses, mentorship, or career guidance.
+              We're here to help you on your learning journey. Reach out to us for any questions
+              about courses, mentorship, or career guidance.
             </p>
           </div>
         </div>
@@ -82,14 +81,8 @@ const ContactPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             {contactMethods.map((method, index) => (
-              <Card
-                key={index}
-                hover={true}
-                padding="lg"
-              >
-                <div className="text-3xl mb-3">
-                  {method.icon}
-                </div>
+              <Card key={index} hover={true} padding="lg">
+                <div className="text-3xl mb-3">{method.icon}</div>
                 <h3 className="text-lg font-bold text-gray-800 mb-1">{method.title}</h3>
                 <p className="text-indigo-600 font-semibold mb-1">{method.details}</p>
                 <p className="text-gray-600 text-sm">{method.description}</p>
@@ -98,11 +91,7 @@ const ContactPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <Card
-              className=" relative overflow-hidden"
-              hover={true}
-              padding="lg"
-            >
+            <Card className=" relative overflow-hidden" hover={true} padding="lg">
               <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-bl-full"></div>
 
               <div className="text-center mb-8">
@@ -113,8 +102,8 @@ const ContactPage: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <InputField
-                    label='Full Name *'
-                    icon={<FaUser className='text-gray-400' />}
+                    label="Full Name *"
+                    icon={<FaUser className="text-gray-400" />}
                     type="text"
                     name="name"
                     value={formData.name}
@@ -122,7 +111,8 @@ const ContactPage: React.FC = () => {
                     placeholder="Enter your full name"
                   />
 
-                  <InputField label='Email Address *'
+                  <InputField
+                    label="Email Address *"
                     type="email"
                     name="email"
                     value={formData.email}
@@ -133,7 +123,7 @@ const ContactPage: React.FC = () => {
 
                 <div>
                   <TextArea
-                    label='Message *'
+                    label="Message *"
                     id="message"
                     name="message"
                     required
@@ -144,10 +134,8 @@ const ContactPage: React.FC = () => {
                   />
                 </div>
 
-                <div className='flex justify-end'>
-                  <Button
-                    type="submit"
-                  >
+                <div className="flex justify-end">
+                  <Button type="submit">
                     {isSubmitting ? (
                       <div className="flex items-center justify-center">
                         <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
@@ -162,9 +150,7 @@ const ContactPage: React.FC = () => {
             </Card>
 
             <div className="space-y-8">
-              <Card className='relative'
-                hover={true}
-              >
+              <Card className="relative" hover={true}>
                 <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-bl-full"></div>
 
                 <div className="text-center mb-6">

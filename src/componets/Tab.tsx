@@ -57,29 +57,25 @@ export const Tabs: React.FC<TabsProps> = ({
 
   const getBaseClasses = () => {
     const base = ['flex'];
-    
+
     if (orientation === 'horizontal') {
       base.push('flex-row border-b border-gray-200');
     } else {
       base.push('flex-col border-r border-gray-200');
     }
-    
+
     if (className) {
       base.push(className);
     }
-    
+
     return base.join(' ');
   };
 
   return (
     <TabsContext.Provider value={contextValue}>
       <div className={getBaseClasses()} role="tablist">
-        {tabs.map((tab) => (
-          <TabTrigger
-            key={tab.value}
-            tab={tab}
-            fullWidth={fullWidth}
-          />
+        {tabs.map(tab => (
+          <TabTrigger key={tab.value} tab={tab} fullWidth={fullWidth} />
         ))}
       </div>
     </TabsContext.Provider>
@@ -107,8 +103,10 @@ const TabTrigger: React.FC<TabTriggerProps> = ({ tab, fullWidth }) => {
   };
 
   const getVariantClasses = () => {
-    const base = ['flex items-center gap-2 font-medium whitespace-nowrap  cursor-pointer transition-all duration-200'];
-    
+    const base = [
+      'flex items-center gap-2 font-medium whitespace-nowrap  cursor-pointer transition-all duration-200',
+    ];
+
     switch (variant) {
       case 'pills':
         base.push('rounded-lg');
@@ -118,7 +116,7 @@ const TabTrigger: React.FC<TabTriggerProps> = ({ tab, fullWidth }) => {
           base.push('text-gray-500 hover:text-gray-700 hover:bg-gray-100');
         }
         break;
-      
+
       case 'underline':
         base.push('border-b-2');
         if (isActive) {
@@ -127,7 +125,7 @@ const TabTrigger: React.FC<TabTriggerProps> = ({ tab, fullWidth }) => {
           base.push('border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300');
         }
         break;
-      
+
       case 'segmented':
         base.push('border first:rounded-l-lg last:rounded-r-lg');
         if (isActive) {
@@ -136,7 +134,7 @@ const TabTrigger: React.FC<TabTriggerProps> = ({ tab, fullWidth }) => {
           base.push('bg-white text-gray-700 border-gray-300 hover:bg-gray-50');
         }
         break;
-      
+
       default:
         base.push('border-b-2 border-transparent');
         if (isActive) {
@@ -146,11 +144,11 @@ const TabTrigger: React.FC<TabTriggerProps> = ({ tab, fullWidth }) => {
         }
         break;
     }
-    
+
     if (tab.disabled) {
       base.push('opacity-50 cursor-not-allowed');
     }
-    
+
     return base.join(' ');
   };
 
@@ -174,8 +172,10 @@ const TabTrigger: React.FC<TabTriggerProps> = ({ tab, fullWidth }) => {
   };
 
   const getBadgeClasses = () => {
-    const base = ['inline-flex items-center justify-center px-2 py-1 text-xs font-medium rounded-full'];
-    
+    const base = [
+      'inline-flex items-center justify-center px-2 py-1 text-xs font-medium rounded-full',
+    ];
+
     if (isActive && variant === 'segmented') {
       base.push('bg-white text-indigo-600');
     } else if (isActive) {
@@ -183,7 +183,7 @@ const TabTrigger: React.FC<TabTriggerProps> = ({ tab, fullWidth }) => {
     } else {
       base.push('bg-gray-100 text-gray-600');
     }
-    
+
     return base.join(' ');
   };
 
@@ -205,11 +205,7 @@ const TabTrigger: React.FC<TabTriggerProps> = ({ tab, fullWidth }) => {
     >
       {tab.icon && <tab.icon className={`flex-shrink-0 ${getIconSize()}`} />}
       <span>{tab.label}</span>
-      {tab.badge && (
-        <span className={getBadgeClasses()}>
-          {tab.badge}
-        </span>
-      )}
+      {tab.badge && <span className={getBadgeClasses()}>{tab.badge}</span>}
     </button>
   );
 };
@@ -269,13 +265,15 @@ export const TabsContainer: React.FC<TabsContainerProps> = ({
 
   return (
     <div className={className}>
-      <TabsContext.Provider value={{
-        value,
-        onChange: handleChange,
-        variant: 'default',
-        size: 'md',
-        orientation: 'horizontal',
-      }}>
+      <TabsContext.Provider
+        value={{
+          value,
+          onChange: handleChange,
+          variant: 'default',
+          size: 'md',
+          orientation: 'horizontal',
+        }}
+      >
         {children}
       </TabsContext.Provider>
     </div>

@@ -3,7 +3,6 @@ import { Button, Container } from '../../index';
 import { useAuth } from '../../hooks/useAuth';
 
 const Workshop = () => {
-
   const { isAuthenticated, user } = useAuth();
 
   return (

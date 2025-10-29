@@ -7,7 +7,7 @@ const Courses = ({
   title = "Explore Our World's Best Courses",
   description = 'When known either took a galley of type scrambled it to make a type specimen book.',
   showViewAllButton = true,
-  limit = 8
+  limit = 8,
 }) => {
   const { courses } = useFetchCourses({ limit });
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Courses = ({
         <CoursesHeader title={title} description={description} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-          {courses?.slice(0,4)?.map(course => (
+          {courses?.slice(0, 4)?.map(course => (
             <CourseCard key={course._id} course={course} onEnroll={handleEnroll} />
           ))}
         </div>

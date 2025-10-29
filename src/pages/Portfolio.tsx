@@ -1,10 +1,8 @@
-import React from 'react'
-import ComingSoon from '../componets/ComingSoon'
+import React from 'react';
+import ComingSoon from '../componets/ComingSoon';
 
 const Portfolio = () => {
-    return (
-        <ComingSoon />
-    )
-}
+  return <ComingSoon />;
+};
 
-export default Portfolio
+export default Portfolio;

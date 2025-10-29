@@ -7,7 +7,6 @@ import { formatDate, getBadgeColor, getCategoryLabel, getReadTimeNumber } from '
 import { Link } from 'react-router-dom';
 
 const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
-    
   return (
     <Card
       padding="sm"
@@ -25,7 +24,9 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => {
       <div className="flex justify-between items-center mb-3">
         {news.category && (
           <div className="">
-            <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full border ${getBadgeColor(news.category)}`}>
+            <span
+              className={`inline-block px-3 py-1 text-xs font-semibold rounded-full border ${getBadgeColor(news.category)}`}
+            >
               {getCategoryLabel(news.category)}
             </span>
           </div>

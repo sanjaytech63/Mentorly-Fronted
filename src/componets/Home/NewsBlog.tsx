@@ -6,20 +6,13 @@ import { ErrorState } from '../ErrorState';
 import { EmptyState } from '../EmptyState';
 
 const NewsBlogs: React.FC = () => {
-  const {
-    blogsData,
-    blogLoading,
-    fetchErrors,
-    refetch,
-    hasNextPage,
-    setFilters,
-  } = useFetchBlogs();
+  const { blogsData, blogLoading, fetchErrors, refetch, hasNextPage, setFilters } = useFetchBlogs();
 
   const handleLoadMore = () => {
     if (hasNextPage) {
       setFilters((prev: any) => ({
         ...prev,
-        page: prev.page + 1
+        page: prev.page + 1,
       }));
     }
   };
@@ -35,20 +28,11 @@ const NewsBlogs: React.FC = () => {
   }
 
   if (fetchErrors && blogsData.length === 0) {
-    return (
-      <ErrorState
-        onRetry={refetch}
-        error={fetchErrors}
-      />
-    );
+    return <ErrorState onRetry={refetch} error={fetchErrors} />;
   }
 
   if (!blogsData || blogsData.length === 0) {
-    return (
-      <EmptyState
-        title="No blogs found"
-      />
-    );
+    return <EmptyState title="No blogs found" />;
   }
 
   return (
@@ -64,7 +48,7 @@ const NewsBlogs: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {blogsData.map((blog) => (
+          {blogsData.map(blog => (
             <NewsCard
               key={blog._id}
               news={{
@@ -74,9 +58,9 @@ const NewsBlogs: React.FC = () => {
                 image: blog.image,
                 author: blog.author,
                 category: blog.category,
-                readTime: blog.readTime || "5",
+                readTime: blog.readTime || '5',
                 badge: blog.badge,
-                slug:blog.slug,
+                slug: blog.slug,
                 createdAt: blog.createdAt,
               }}
             />
@@ -91,10 +75,7 @@ const NewsBlogs: React.FC = () => {
 
         {hasNextPage && !blogLoading && (
           <div className="text-center mt-12 flex justify-center">
-            <Button
-              className="py-3"
-              onClick={handleLoadMore}
-            >
+            <Button className="py-3" onClick={handleLoadMore}>
               <span>Load More</span>
               <FiArrowRight />
             </Button>

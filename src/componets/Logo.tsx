@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Logo = () => {
   return (
-    <Link
-      to="/"
-      aria-label="Home"
-      className="flex items-center"
-    >
+    <Link to="/" aria-label="Home" className="flex items-center">
       <img
         src="/logo.svg"
         alt="Mentorly Logo"

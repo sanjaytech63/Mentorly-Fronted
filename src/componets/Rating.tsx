@@ -36,14 +36,10 @@ const Rating: React.FC<RatingProps> = ({
         ))}
       </div>
 
-      <span className={`font-medium text-sm text-gray-700 ${sizeClasses[size]}`}>
-        {rating}
-      </span>
+      <span className={`font-medium text-sm text-gray-700 ${sizeClasses[size]}`}>{rating}</span>
 
       {showReviewCount && (
-        <span className={`text-gray-500 text-sm ${sizeClasses[size]}`}>
-          ({reviewCount})
-        </span>
+        <span className={`text-gray-500 text-sm ${sizeClasses[size]}`}>({reviewCount})</span>
       )}
     </div>
   );

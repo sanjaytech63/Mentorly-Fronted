@@ -242,143 +242,144 @@ export const sectionstrems = [
   },
 ];
 
-
 export const missionContent: MissionContent = {
-  title: "About Mentorly",
+  title: 'About Mentorly',
   paragraphs: [
     "To combat unemployment in India's youth society and introduce a new education system, Mentorly has embarked on a transformative journey. In today's competitive world, practical skills and mentorship are more valuable than theoretical knowledge alone. We recognize that many talented individuals fall behind due to lack of proper guidance and industry-relevant training.",
-    "Our vision is to revolutionize education in India by creating a platform where students can discover their passions, master in-demand skills under expert guidance, and build successful careers. We're committed to transforming every learner into a industry-ready professional through personalized mentorship and hands-on learning experiences."
-  ]
+    "Our vision is to revolutionize education in India by creating a platform where students can discover their passions, master in-demand skills under expert guidance, and build successful careers. We're committed to transforming every learner into a industry-ready professional through personalized mentorship and hands-on learning experiences.",
+  ],
 };
 
 export const callToAction: CallToAction = {
-  title: "Start Your Learning Journey",
-  content: "Develop market-relevant skills, accelerate your career growth, and join us in building a skilled, empowered youth community in India.",
-  highlight: "Mentorly - Your Gateway to Professional Excellence"
+  title: 'Start Your Learning Journey',
+  content:
+    'Develop market-relevant skills, accelerate your career growth, and join us in building a skilled, empowered youth community in India.',
+  highlight: 'Mentorly - Your Gateway to Professional Excellence',
 };
 
 export const features: Feature[] = [
   {
-    title: "Industry-Relevant Courses",
-    description: "Our curriculum is designed in collaboration with industry experts to ensure you learn the most current and demanded skills. Each course combines theoretical knowledge with practical projects that simulate real-world challenges.",
-    icon: "course"
+    title: 'Industry-Relevant Courses',
+    description:
+      'Our curriculum is designed in collaboration with industry experts to ensure you learn the most current and demanded skills. Each course combines theoretical knowledge with practical projects that simulate real-world challenges.',
+    icon: 'course',
   },
   {
-    title: "Expert Mentors & Trainers",
-    description: "Learn from seasoned professionals and industry veterans who bring years of practical experience. Our mentors provide personalized guidance, career advice, and industry connections to help you succeed.",
-    icon: "trainer"
-  }
+    title: 'Expert Mentors & Trainers',
+    description:
+      'Learn from seasoned professionals and industry veterans who bring years of practical experience. Our mentors provide personalized guidance, career advice, and industry connections to help you succeed.',
+    icon: 'trainer',
+  },
 ];
-
 
 export const featuredResources: FeaturedResource[] = [
   {
-    title: "Complete Web Development Bootcamp",
-    description: "Master HTML, CSS, JavaScript, and modern frameworks with hands-on projects",
-    icon: "💻",
-    category: "Web Development",
-    level: "Beginner"
+    title: 'Complete Web Development Bootcamp',
+    description: 'Master HTML, CSS, JavaScript, and modern frameworks with hands-on projects',
+    icon: '💻',
+    category: 'Web Development',
+    level: 'Beginner',
   },
   {
-    title: "Data Science Fundamentals",
-    description: "Learn Python, statistics, and machine learning concepts from scratch",
-    icon: "📊",
-    category: "Data Science",
-    level: "Intermediate"
+    title: 'Data Science Fundamentals',
+    description: 'Learn Python, statistics, and machine learning concepts from scratch',
+    icon: '📊',
+    category: 'Data Science',
+    level: 'Intermediate',
   },
   {
-    title: "Mobile App Development",
-    description: "Build cross-platform apps with React Native and Flutter & I os Development",
-    icon: "📱",
-    category: "App Development",
-    level: "Intermediate"
+    title: 'Mobile App Development',
+    description: 'Build cross-platform apps with React Native and Flutter & I os Development',
+    icon: '📱',
+    category: 'App Development',
+    level: 'Intermediate',
   },
   {
-    title: "UI/UX Design Masterclass",
-    description: "Create stunning user interfaces and exceptional user experiences",
-    icon: "🎨",
-    category: "Design",
-    level: "Beginner"
-  }
+    title: 'UI/UX Design Masterclass',
+    description: 'Create stunning user interfaces and exceptional user experiences',
+    icon: '🎨',
+    category: 'Design',
+    level: 'Beginner',
+  },
 ];
 
 export const resourceCategories: ResourceCategory[] = [
   {
-    title: "Web Development",
-    icon: "🌐",
-    description: "Frontend, Backend & Full Stack Resources",
+    title: 'Web Development',
+    icon: '🌐',
+    description: 'Frontend, Backend & Full Stack Resources',
     items: [
-      "HTML5, CSS3, JavaScript Fundamentals",
-      "React, Vue, Angular Frameworks",
-      "Node.js, Express, MongoDB Backend",
-      "Responsive Design & Web Performance",
-      "API Development & Integration"
+      'HTML5, CSS3, JavaScript Fundamentals',
+      'React, Vue, Angular Frameworks',
+      'Node.js, Express, MongoDB Backend',
+      'Responsive Design & Web Performance',
+      'API Development & Integration',
     ],
-    color: "from-blue-500 to-cyan-500"
+    color: 'from-blue-500 to-cyan-500',
   },
   {
-    title: "Data Science & AI",
-    icon: "🤖",
-    description: "Machine Learning & Analytics Resources",
+    title: 'Data Science & AI',
+    icon: '🤖',
+    description: 'Machine Learning & Analytics Resources',
     items: [
-      "Python Programming & Libraries",
-      "Data Analysis with Pandas & NumPy",
-      "Machine Learning Algorithms",
-      "Deep Learning & Neural Networks",
-      "Data Visualization Tools"
+      'Python Programming & Libraries',
+      'Data Analysis with Pandas & NumPy',
+      'Machine Learning Algorithms',
+      'Deep Learning & Neural Networks',
+      'Data Visualization Tools',
     ],
-    color: "from-purple-500 to-pink-500"
+    color: 'from-purple-500 to-pink-500',
   },
   {
-    title: "Mobile Development",
-    icon: "📱",
-    description: "iOS, Android & Cross-Platform",
+    title: 'Mobile Development',
+    icon: '📱',
+    description: 'iOS, Android & Cross-Platform',
     items: [
-      "React Native & Flutter Development",
-      "Native iOS (Swift) & Android (Kotlin)",
-      "Mobile UI/UX Design Principles",
-      "App Store Deployment Guides",
-      "Performance Optimization"
+      'React Native & Flutter Development',
+      'Native iOS (Swift) & Android (Kotlin)',
+      'Mobile UI/UX Design Principles',
+      'App Store Deployment Guides',
+      'Performance Optimization',
     ],
-    color: "from-green-500 to-emerald-500"
+    color: 'from-green-500 to-emerald-500',
   },
   {
-    title: "UI/UX Design",
-    icon: "🎨",
-    description: "Design Thinking & Visual Design",
+    title: 'UI/UX Design',
+    icon: '🎨',
+    description: 'Design Thinking & Visual Design',
     items: [
-      "Figma, Adobe XD & Sketch Tutorials",
-      "User Research & Persona Development",
-      "Wireframing & Prototyping",
-      "Design Systems & Component Libraries",
-      "Accessibility & Inclusive Design"
+      'Figma, Adobe XD & Sketch Tutorials',
+      'User Research & Persona Development',
+      'Wireframing & Prototyping',
+      'Design Systems & Component Libraries',
+      'Accessibility & Inclusive Design',
     ],
-    color: "from-orange-500 to-red-500"
+    color: 'from-orange-500 to-red-500',
   },
   {
-    title: "Cloud & DevOps",
-    icon: "☁️",
-    description: "Infrastructure & Deployment",
+    title: 'Cloud & DevOps',
+    icon: '☁️',
+    description: 'Infrastructure & Deployment',
     items: [
-      "AWS, Azure & Google Cloud Platforms",
-      "Docker & Kubernetes Containerization",
-      "CI/CD Pipeline Implementation",
-      "Infrastructure as Code (Terraform)",
-      "Monitoring & Logging Solutions"
+      'AWS, Azure & Google Cloud Platforms',
+      'Docker & Kubernetes Containerization',
+      'CI/CD Pipeline Implementation',
+      'Infrastructure as Code (Terraform)',
+      'Monitoring & Logging Solutions',
     ],
-    color: "from-yellow-500 to-amber-500"
+    color: 'from-yellow-500 to-amber-500',
   },
   {
-    title: "Career Growth",
-    icon: "🚀",
-    description: "Soft Skills & Professional Development",
+    title: 'Career Growth',
+    icon: '🚀',
+    description: 'Soft Skills & Professional Development',
     items: [
-      "Technical Interview Preparation",
-      "Resume Building & Portfolio Development",
-      "Networking & LinkedIn Optimization",
-      "Salary Negotiation Strategies",
-      "Freelancing & Remote Work Guides"
+      'Technical Interview Preparation',
+      'Resume Building & Portfolio Development',
+      'Networking & LinkedIn Optimization',
+      'Salary Negotiation Strategies',
+      'Freelancing & Remote Work Guides',
     ],
-    color: "from-indigo-500 to-purple-500"
-  }
+    color: 'from-indigo-500 to-purple-500',
+  },
 ];

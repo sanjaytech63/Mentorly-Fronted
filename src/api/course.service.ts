@@ -6,7 +6,10 @@ interface GetCoursesOptions {
 }
 
 // Existing functions...
-export const getCourses = async (filters: CourseFilters = {}, options: GetCoursesOptions = {}): Promise<any> => {
+export const getCourses = async (
+  filters: CourseFilters = {},
+  options: GetCoursesOptions = {}
+): Promise<any> => {
   const params = new URLSearchParams();
 
   if (filters.page) params.append('page', filters.page.toString());
@@ -35,7 +38,9 @@ export const getCourseById = async (id: string): Promise<Course> => {
   return response.data.data;
 };
 
-export const createCourse = async (formData: FormData): Promise<{ data: Course; message: string }> => {
+export const createCourse = async (
+  formData: FormData
+): Promise<{ data: Course; message: string }> => {
   const response = await api.post('/courses', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -45,7 +50,10 @@ export const createCourse = async (formData: FormData): Promise<{ data: Course; 
   return response.data;
 };
 
-export const updateCourse = async (id: string, formData: FormData): Promise<{ data: Course; message: string }> => {
+export const updateCourse = async (
+  id: string,
+  formData: FormData
+): Promise<{ data: Course; message: string }> => {
   const response = await api.put(`/courses/${id}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -80,12 +88,18 @@ export const getDiscountedCourses = async (): Promise<Course[]> => {
   return response.data.data;
 };
 
-export const updateCourseStatus = async (id: string, isActive: boolean): Promise<{ message: string }> => {
+export const updateCourseStatus = async (
+  id: string,
+  isActive: boolean
+): Promise<{ message: string }> => {
   const response = await api.patch(`/courses/${id}/status`, { isActive });
   return response.data;
 };
 
-export const updateCourseFeatured = async (id: string, isFeatured: boolean): Promise<{ message: string }> => {
+export const updateCourseFeatured = async (
+  id: string,
+  isFeatured: boolean
+): Promise<{ message: string }> => {
   const response = await api.patch(`/courses/${id}/featured`, { isFeatured });
   return response.data;
 };
@@ -129,7 +143,17 @@ export interface ListCoursesFilters {
   limit?: number;
 
   // Sorting
-  sortBy?: 'price' | 'discountedPrice' | 'rating' | 'students' | 'duration' | 'discount' | 'popularity' | 'trending' | 'createdAt' | 'updatedAt';
+  sortBy?:
+    | 'price'
+    | 'discountedPrice'
+    | 'rating'
+    | 'students'
+    | 'duration'
+    | 'discount'
+    | 'popularity'
+    | 'trending'
+    | 'createdAt'
+    | 'updatedAt';
   sortOrder?: 'asc' | 'desc';
 
   // Advanced filters
@@ -225,7 +249,7 @@ export const quickSearchCourses = async (
 ): Promise<QuickSearchResult[]> => {
   const params = new URLSearchParams({
     q: query,
-    limit: limit.toString()
+    limit: limit.toString(),
   });
 
   const config = {
@@ -246,7 +270,7 @@ export const getSimilarCourses = async (
 ): Promise<Course[]> => {
   const params = new URLSearchParams({
     courseId,
-    limit: limit.toString()
+    limit: limit.toString(),
   });
 
   const config = {
@@ -267,7 +291,7 @@ export const getCoursesByCategories = async (
 ): Promise<Course[]> => {
   const params = new URLSearchParams({
     category: categories.join(','),
-    limit: limit.toString()
+    limit: limit.toString(),
   });
 
   const config = {
@@ -288,7 +312,7 @@ export const getTrendingCourses = async (
   const params = new URLSearchParams({
     sortBy: 'trending',
     sortOrder: 'desc',
-    limit: limit.toString()
+    limit: limit.toString(),
   });
 
   const config = {
@@ -309,7 +333,7 @@ export const getPopularCourses = async (
   const params = new URLSearchParams({
     sortBy: 'students',
     sortOrder: 'desc',
-    limit: limit.toString()
+    limit: limit.toString(),
   });
 
   const config = {
@@ -330,7 +354,7 @@ export const getNewCourses = async (
   const params = new URLSearchParams({
     sortBy: 'createdAt',
     sortOrder: 'desc',
-    limit: limit.toString()
+    limit: limit.toString(),
   });
 
   const config = {
@@ -353,7 +377,7 @@ export const getTopRatedCourses = async (
     sortBy: 'rating',
     sortOrder: 'desc',
     minRating: minRating.toString(),
-    limit: limit.toString()
+    limit: limit.toString(),
   });
 
   const config = {
@@ -373,7 +397,7 @@ export const getFreeCourses = async (
 ): Promise<Course[]> => {
   const params = new URLSearchParams({
     priceRange: 'free',
-    limit: limit.toString()
+    limit: limit.toString(),
   });
 
   const config = {
@@ -396,7 +420,7 @@ export const getBestDealCourses = async (
     sortBy: 'discount',
     sortOrder: 'desc',
     minDiscountPercentage: minDiscount.toString(),
-    limit: limit.toString()
+    limit: limit.toString(),
   });
 
   const config = {

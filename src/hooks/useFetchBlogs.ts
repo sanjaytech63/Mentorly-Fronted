@@ -5,133 +5,141 @@ import { Blog } from '../types/blog.types';
 import { BlogFilters } from '../types/blog.types';
 
 interface UseFetchBlogsReturn {
-    blogsData: Blog[];
-    blogLoading: boolean;
-    fetchErrors: string | null;
-    refetch: (filters?: any) => Promise<void>;
-    pagination: any | null;
-    filters: any;
-    setFilters: React.Dispatch<React.SetStateAction<any>>;
-    hasNextPage: boolean;
-    hasPrevPage: boolean;
+  blogsData: Blog[];
+  blogLoading: boolean;
+  fetchErrors: string | null;
+  refetch: (filters?: any) => Promise<void>;
+  pagination: any | null;
+  filters: any;
+  setFilters: React.Dispatch<React.SetStateAction<any>>;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
 }
 
 export const useFetchBlogs = (initialFilters: any = {}): UseFetchBlogsReturn => {
-    const [blogsData, setBlogsData] = useState<Blog[]>([]);
-    const [blogLoading, setBlogLoading] = useState(false);
-    const [fetchErrors, setFetchErrors] = useState<string | null>(null);
-    const [pagination, setPagination] = useState<any | null>(null);
-    const [filters, setFilters] = useState<any>({
-        page: 1,
-        limit: 4,
-        ...initialFilters,
-    });
+  const [blogsData, setBlogsData] = useState<Blog[]>([]);
+  const [blogLoading, setBlogLoading] = useState(false);
+  const [fetchErrors, setFetchErrors] = useState<string | null>(null);
+  const [pagination, setPagination] = useState<any | null>(null);
+  const [filters, setFilters] = useState<any>({
+    page: 1,
+    limit: 4,
+    ...initialFilters,
+  });
 
-    const abortControllerRef = useRef<AbortController | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-    const debouncedSearch = useDebounce(filters.search, 500);
+  const debouncedSearch = useDebounce(filters.search, 500);
 
-    const fetchBlogs = useCallback(async (customFilters?: any, append: boolean = false) => {
-        if (abortControllerRef.current) {
-            abortControllerRef.current.abort();
+  const fetchBlogs = useCallback(
+    async (customFilters?: any, append: boolean = false) => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+
+      abortControllerRef.current = new AbortController();
+
+      try {
+        setBlogLoading(true);
+        setFetchErrors(null);
+
+        const currentFilters = customFilters || filters;
+        const response = await getBlogs({
+          ...currentFilters,
+          search: debouncedSearch || currentFilters.search,
+        });
+
+        let blogs: Blog[] = [];
+        let paginationData = null;
+
+        if (response.data) {
+          blogs = response.data.data || response.data || [];
+          paginationData = response.data.pagination || {
+            currentPage: response.data.page || currentFilters.page || 1,
+            totalPages: response.data.totalPages || 1,
+            totalItems: response.data.total || 0,
+            itemsPerPage: response.data.limit || currentFilters.limit || 4,
+            hasNext: (response.data.page || 1) < (response.data.totalPages || 1),
+            hasPrev: (response.data.page || 1) > 1,
+            nextPage:
+              (response.data.page || 1) < (response.data.totalPages || 1)
+                ? (response.data.page || 1) + 1
+                : null,
+            prevPage: (response.data.page || 1) > 1 ? (response.data.page || 1) - 1 : null,
+          };
+        } else {
+          blogs = response.data || response || [];
+          paginationData = response.pagination || {
+            currentPage: response.page || currentFilters.page || 1,
+            totalPages: response.totalPages || 1,
+            totalItems: response.total || 0,
+            itemsPerPage: response.limit || currentFilters.limit || 4,
+            hasNext: (response.page || 1) < (response.totalPages || 1),
+            hasPrev: (response.page || 1) > 1,
+          };
         }
 
-        abortControllerRef.current = new AbortController();
-
-        try {
-            setBlogLoading(true);
-            setFetchErrors(null);
-
-            const currentFilters = customFilters || filters;
-            const response = await getBlogs({
-                ...currentFilters,
-                search: debouncedSearch || currentFilters.search,
-            });
-
-            let blogs: Blog[] = [];
-            let paginationData = null;
-
-            if (response.data) {
-                blogs = response.data.data || response.data || [];
-                paginationData = response.data.pagination || {
-                    currentPage: response.data.page || currentFilters.page || 1,
-                    totalPages: response.data.totalPages || 1,
-                    totalItems: response.data.total || 0,
-                    itemsPerPage: response.data.limit || currentFilters.limit || 4,
-                    hasNext: (response.data.page || 1) < (response.data.totalPages || 1),
-                    hasPrev: (response.data.page || 1) > 1,
-                    nextPage: (response.data.page || 1) < (response.data.totalPages || 1) ? (response.data.page || 1) + 1 : null,
-                    prevPage: (response.data.page || 1) > 1 ? (response.data.page || 1) - 1 : null,
-                };
-            } else {
-                blogs = response.data || response || [];
-                paginationData = response.pagination || {
-                    currentPage: response.page || currentFilters.page || 1,
-                    totalPages: response.totalPages || 1,
-                    totalItems: response.total || 0,
-                    itemsPerPage: response.limit || currentFilters.limit || 4,
-                    hasNext: (response.page || 1) < (response.totalPages || 1),
-                    hasPrev: (response.page || 1) > 1,
-                };
-            }
-
-            if (append && currentFilters.page > 1) {
-                setBlogsData(prev => [...prev, ...blogs]);
-            } else {
-                setBlogsData(blogs);
-            }
-
-            setPagination(paginationData);
-
-            if (!customFilters && paginationData) {
-                setFilters((prev: BlogFilters) => ({
-                    ...prev,
-                    page: paginationData.currentPage,
-                }));
-            }
-
-        } catch (err: any) {
-            if (err.name === 'AbortError') return;
-
-            const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong while fetching blogs";
-            setFetchErrors(errorMessage);
-            console.error('Error fetching blogs:', err);
-        } finally {
-            setBlogLoading(false);
+        if (append && currentFilters.page > 1) {
+          setBlogsData(prev => [...prev, ...blogs]);
+        } else {
+          setBlogsData(blogs);
         }
-    }, [filters, debouncedSearch]);
 
-    useEffect(() => {
-        if (debouncedSearch !== undefined || filters.category !== initialFilters.category) {
-            setFilters((prev: any) => ({ ...prev, page: 1 }));
+        setPagination(paginationData);
+
+        if (!customFilters && paginationData) {
+          setFilters((prev: BlogFilters) => ({
+            ...prev,
+            page: paginationData.currentPage,
+          }));
         }
-    }, [debouncedSearch, filters.category, initialFilters.category]);
+      } catch (err: any) {
+        if (err.name === 'AbortError') return;
 
-    useEffect(() => {
-        const shouldAppend = filters.page > 1;
-        fetchBlogs(undefined, shouldAppend);
-    }, [filters.page, filters.limit, filters.category, debouncedSearch]);
+        const errorMessage =
+          err?.response?.data?.message ||
+          err?.message ||
+          'Something went wrong while fetching blogs';
+        setFetchErrors(errorMessage);
+        console.error('Error fetching blogs:', err);
+      } finally {
+        setBlogLoading(false);
+      }
+    },
+    [filters, debouncedSearch]
+  );
 
-    useEffect(() => {
-        return () => {
-            if (abortControllerRef.current) {
-                abortControllerRef.current.abort();
-            }
-        };
-    }, []);
+  useEffect(() => {
+    if (debouncedSearch !== undefined || filters.category !== initialFilters.category) {
+      setFilters((prev: any) => ({ ...prev, page: 1 }));
+    }
+  }, [debouncedSearch, filters.category, initialFilters.category]);
 
-    const hasNextPage = pagination ? pagination.hasNext : false;
-    const hasPrevPage = pagination ? pagination.hasPrev : false;
+  useEffect(() => {
+    const shouldAppend = filters.page > 1;
+    fetchBlogs(undefined, shouldAppend);
+  }, [filters.page, filters.limit, filters.category, debouncedSearch]);
 
-    return {
-        blogsData,
-        blogLoading,
-        fetchErrors,
-        refetch: fetchBlogs,
-        pagination,
-        filters,
-        setFilters,
-        hasNextPage,
-        hasPrevPage,
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
     };
+  }, []);
+
+  const hasNextPage = pagination ? pagination.hasNext : false;
+  const hasPrevPage = pagination ? pagination.hasPrev : false;
+
+  return {
+    blogsData,
+    blogLoading,
+    fetchErrors,
+    refetch: fetchBlogs,
+    pagination,
+    filters,
+    setFilters,
+    hasNextPage,
+    hasPrevPage,
+  };
 };

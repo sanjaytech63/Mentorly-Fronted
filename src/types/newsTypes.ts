@@ -8,9 +8,9 @@ export interface NewsItem {
   readTime: string;
   badge?: string;
   featured?: boolean;
-  createdAt?: any
-  blog?: any
-  slug?:string
+  createdAt?: any;
+  blog?: any;
+  slug?: string;
 }
 
 export interface NewsCardProps {

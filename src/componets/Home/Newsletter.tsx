@@ -25,7 +25,7 @@ const Newsletter: React.FC<SimpleNewsletterProps> = ({
     try {
       setLoading(true);
       const msg: any = await subscribeApi(email);
-      handleSuccess(msg.message || "");
+      handleSuccess(msg.message || '');
       setEmail('');
     } catch (err: any) {
       handleError(err.message);
@@ -38,17 +38,13 @@ const Newsletter: React.FC<SimpleNewsletterProps> = ({
     try {
       if (value && value.target && value.target.value !== undefined) {
         setEmail(value.target.value);
-      }
-      else if (typeof value === 'string') {
+      } else if (typeof value === 'string') {
         setEmail(value);
-      }
-      else if (value && value.value !== undefined) {
+      } else if (value && value.value !== undefined) {
         setEmail(value.value);
-      }
-      else if (value && value.detail && value.detail.value !== undefined) {
+      } else if (value && value.detail && value.detail.value !== undefined) {
         setEmail(value.detail.value);
-      }
-      else {
+      } else {
         console.warn('Unexpected onChange value format:', value);
       }
     } catch (error) {
@@ -74,7 +70,10 @@ const Newsletter: React.FC<SimpleNewsletterProps> = ({
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-2xl">
+              <form
+                onSubmit={handleSubscribe}
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-2xl"
+              >
                 <InputField
                   type="email"
                   placeholder={placeholder}

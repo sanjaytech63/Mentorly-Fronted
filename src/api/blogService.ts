@@ -29,7 +29,10 @@ export const createBlog = async (formData: FormData): Promise<{ data: Blog; mess
   return response.data;
 };
 
-export const updateBlog = async (id: string, formData: FormData): Promise<{ data: Blog; message: string }> => {
+export const updateBlog = async (
+  id: string,
+  formData: FormData
+): Promise<{ data: Blog; message: string }> => {
   const response = await api.put(`/blogs/${id}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',

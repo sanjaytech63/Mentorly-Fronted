@@ -27,10 +27,11 @@ const Navbar = () => {
               <Link
                 key={item.id}
                 to={item.path}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 group ${location.pathname === item.path
+                className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 group ${
+                  location.pathname === item.path
                     ? 'text-indigo-600 bg-indigo-50 font-semibold'
                     : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-100'
-                  }`}
+                }`}
               >
                 <span>{item.name}</span>
               </Link>
@@ -80,15 +81,17 @@ const Navbar = () => {
       </Container>
 
       <div
-        className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300 z-[999] ${isMenuOpen
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300 z-[999] ${
+          isMenuOpen
             ? 'opacity-100 visible pointer-events-auto'
             : 'opacity-0 invisible pointer-events-none'
-          }`}
+        }`}
         onClick={() => setIsMenuOpen(false)}
       >
         <div
-          className={`absolute left-0 top-0 h-full w-full bg-white  transition-transform duration-300 ease-in-out z-[9999] ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-            }`}
+          className={`absolute left-0 top-0 h-full w-full bg-white  transition-transform duration-300 ease-in-out z-[9999] ${
+            isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
           onClick={e => e.stopPropagation()}
         >
           <Container>
@@ -111,16 +114,18 @@ const Navbar = () => {
                   key={item.id}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 border ${location.pathname === item.path
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 border ${
+                    location.pathname === item.path
                       ? 'text-indigo-600 bg-indigo-50 border-indigo-100'
                       : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50 border-transparent'
-                    }`}
+                  }`}
                   style={{ transitionDelay: `${index * 40}ms` }}
                 >
                   <IconComponent
                     size={20}
-                    className={`transition-transform duration-300 ${location.pathname === item.path ? 'scale-110' : 'group-hover:scale-110'
-                      }`}
+                    className={`transition-transform duration-300 ${
+                      location.pathname === item.path ? 'scale-110' : 'group-hover:scale-110'
+                    }`}
                   />
                   <span>{item.name}</span>
                 </Link>

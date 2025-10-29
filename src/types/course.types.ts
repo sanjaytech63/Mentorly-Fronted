@@ -78,7 +78,7 @@ export interface CourseFormModalProps {
   categoryOptions?: any;
   levelOptions?: any;
   badgeOptions?: any;
-  course?: Course
+  course?: Course;
 }
 
 export interface CourseCardProps {
