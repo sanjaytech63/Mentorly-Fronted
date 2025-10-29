@@ -4,7 +4,8 @@ import { FiArrowLeft, FiHome, FiChevronRight } from 'react-icons/fi';
 
 interface BlogHeaderProps {
     blog: {
-        slug: string;
+        slug?: string;
+        title?: string;
     };
 }
 
@@ -34,9 +35,9 @@ export const BlogHeader: React.FC<BlogHeaderProps> = ({ blog }) => {
                             <FiHome size={16} />
                             <span>Home</span>
                         </Link>
-                        <FiChevronRight size={16} className="text-gray-400" />
-                        <span className="text-gray-500 font-medium truncate max-w-xs">
-                            {blog.slug}
+                        <FiChevronRight size={16} className="text-gray-400 md:block hidden" />
+                        <span className="text-gray-500 md:block hidden font-medium truncate max-w-xs">
+                            {blog.slug || blog.title}
                         </span>
                     </nav>
                 </div>

@@ -97,7 +97,7 @@ export interface ListCoursesFilters {
   category?: string | string[];
   level?: string | string[];
   instructor?: string;
-  
+
   // Price filters
   minPrice?: number;
   maxPrice?: number;
@@ -105,33 +105,33 @@ export interface ListCoursesFilters {
   hasDiscount?: boolean;
   minDiscountPercentage?: number;
   maxDiscountPercentage?: number;
-  
+
   // Rating filters
   minRating?: number;
   maxRating?: number;
-  
+
   // Duration filters
   minDuration?: number;
   maxDuration?: number;
   durationRange?: 'short' | 'medium' | 'long' | 'extended';
-  
+
   // Student count filters
   minStudents?: number;
   maxStudents?: number;
-  
+
   // Status filters
   isFeatured?: boolean;
   isActive?: boolean;
   badge?: string | string[];
-  
+
   // Pagination
   page?: number;
   limit?: number;
-  
+
   // Sorting
   sortBy?: 'price' | 'discountedPrice' | 'rating' | 'students' | 'duration' | 'discount' | 'popularity' | 'trending' | 'createdAt' | 'updatedAt';
   sortOrder?: 'asc' | 'desc';
-  
+
   // Advanced filters
   tags?: string | string[];
   createdAfter?: string;
@@ -179,7 +179,7 @@ export interface ListCoursesResponse {
  * Advanced course listing with comprehensive filtering and pagination
  */
 export const listCourses = async (
-  filters: ListCoursesFilters = {}, 
+  filters: ListCoursesFilters = {},
   options: GetCoursesOptions = {}
 ): Promise<ListCoursesResponse> => {
   const params = new URLSearchParams();
@@ -219,7 +219,7 @@ export interface QuickSearchResult {
 }
 
 export const quickSearchCourses = async (
-  query: string, 
+  query: string,
   limit: number = 5,
   options: GetCoursesOptions = {}
 ): Promise<QuickSearchResult[]> => {
@@ -240,7 +240,7 @@ export const quickSearchCourses = async (
  * Get similar courses based on various criteria
  */
 export const getSimilarCourses = async (
-  courseId: string, 
+  courseId: string,
   limit: number = 4,
   options: GetCoursesOptions = {}
 ): Promise<Course[]> => {
@@ -261,7 +261,7 @@ export const getSimilarCourses = async (
  * Get courses by multiple categories
  */
 export const getCoursesByCategories = async (
-  categories: string[], 
+  categories: string[],
   limit: number = 8,
   options: GetCoursesOptions = {}
 ): Promise<Course[]> => {

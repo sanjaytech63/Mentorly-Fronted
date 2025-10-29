@@ -10,6 +10,7 @@ interface EmptyStateProps {
     className?: string;
     action?: React.ReactNode;
     variant?: 'default' | 'search' | 'users';
+    onClearFilters?: () => void
 }
 
 export const EmptyState: React.FC<EmptyStateProps> = ({

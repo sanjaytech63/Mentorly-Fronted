@@ -107,7 +107,7 @@ const TabTrigger: React.FC<TabTriggerProps> = ({ tab, fullWidth }) => {
   };
 
   const getVariantClasses = () => {
-    const base = ['flex items-center gap-2 font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200'];
+    const base = ['flex items-center gap-2 font-medium whitespace-nowrap  cursor-pointer transition-all duration-200'];
     
     switch (variant) {
       case 'pills':

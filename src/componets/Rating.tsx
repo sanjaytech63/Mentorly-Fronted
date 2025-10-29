@@ -37,7 +37,7 @@ const Rating: React.FC<RatingProps> = ({
       </div>
 
       <span className={`font-medium text-sm text-gray-700 ${sizeClasses[size]}`}>
-        {rating.toFixed(1)}
+        {rating}
       </span>
 
       {showReviewCount && (

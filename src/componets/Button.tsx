@@ -29,25 +29,25 @@ const Button: React.FC<ButtonProps> = ({
   const variants = {
     primary:
       'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transform',
-    secondary: 'bg-white 0 text-gray-700 ',
-    outline: 'border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white',
+    secondary: 'text-gray-800 bg-white/90  hover:bg-white',
+    outline: 'border border-gray-300 text-gray-500 hover:bg-gray-100 ',
     ghost: 'text-gray-700 hover:text-blue-600 hover:bg-gray-100',
     danger: 'border border-red-500 text-red-600 bg-red-500 hover:bg-red-600 text-white'
-  };
+};
 
-  const sizes = {
-    small: 'px-3 py-1.5 text-sm',
-    medium: 'px-5 py-2.5 text-sm',
-    large: 'px-6 py-3 text-base',
-    xlarge: 'px-8 py-4 text-lg',
-  };
+const sizes = {
+  small: 'px-3 py-1.5 text-sm',
+  medium: 'px-5 py-2.5 text-sm',
+  large: 'px-6 py-3 text-base',
+  xlarge: 'px-8 py-4 text-lg',
+};
 
-  return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled || isLoading}
-      className={`
+return (
+  <button
+    type={type}
+    onClick={onClick}
+    disabled={disabled || isLoading}
+    className={`
         ${baseClasses}
         ${variants[variant]}
         ${sizes[size]}
@@ -55,17 +55,17 @@ const Button: React.FC<ButtonProps> = ({
         ${isLoading ? 'pointer-events-none' : ''}
         ${className}
       `}
-      {...props}
-    >
-      {isLoading ? (
-        <div className="flex items-center space-x-2">
-          <Loader label="Loading..." />
-        </div>
-      ) : (
-        <div className="flex items-center justify-center space-x-2">{children}</div>
-      )}
-    </button>
-  );
+    {...props}
+  >
+    {isLoading ? (
+      <div className="flex items-center space-x-2">
+        <Loader label="Loading..." />
+      </div>
+    ) : (
+      <div className="flex items-center justify-center space-x-2">{children}</div>
+    )}
+  </button>
+);
 };
 
 export default Button;

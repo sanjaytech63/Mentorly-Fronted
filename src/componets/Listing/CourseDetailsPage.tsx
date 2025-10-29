@@ -22,10 +22,14 @@ import {
   FiHeart,
   FiArrowLeft,
   FiCheck,
-  FiBarChart2
+  FiBarChart2,
+  FiArrowRight
 } from 'react-icons/fi';
 import { getBadgeColor, getBadgeLabel, getCategoryColor, getLevelColor, getLevelLabel } from '../../utils';
 import CourseCard from '../CourseCard';
+import { BlogHeader } from '../BlogHeader';
+import { handleSuccess } from '../../utils/toastHandler';
+import ShareDropdown from '../ShareDropdown';
 
 const CourseDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -36,7 +40,6 @@ const CourseDetailsPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('overview');
   const [isEnrolled, setIsEnrolled] = useState(false);
-  const [isWishlisted, setIsWishlisted] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -49,10 +52,9 @@ const CourseDetailsPage: React.FC = () => {
       setLoading(true);
       setError(null);
 
-      const courseData = await getCourseById(id!);
+      const courseData: any = await getCourseById(id!);
       setCourse(courseData.course || courseData);
 
-      // Fetch similar courses
       const similar = await getSimilarCourses(id!);
       setSimilarCourses(similar);
     } catch (err: any) {
@@ -66,12 +68,6 @@ const CourseDetailsPage: React.FC = () => {
   const handleEnroll = () => {
     console.log('Enrolling in course:', course?._id);
     setIsEnrolled(true);
-    // Implement enrollment logic
-  };
-
-  const handleWishlist = () => {
-    setIsWishlisted(!isWishlisted);
-    // Implement wishlist logic
   };
 
   const handleShare = () => {
@@ -83,7 +79,7 @@ const CourseDetailsPage: React.FC = () => {
       });
     } else {
       navigator.clipboard.writeText(window.location.href);
-      // Show toast notification
+      handleSuccess('Link copied to clipboard!');
     }
   };
 
@@ -109,68 +105,47 @@ const CourseDetailsPage: React.FC = () => {
     );
   }
 
-  const hasDiscount = course.discountedPrice && course.discountedPrice < course.originalPrice;
+  const hasDiscount = course.discountedPrice != null && course.discountedPrice < course.originalPrice;
   const discountPercentage = hasDiscount
-    ? Math.round(((course.originalPrice - course.discountedPrice) / course.originalPrice) * 100)
+    ? Math.round(((course.originalPrice - (course.discountedPrice ?? 0)) / course.originalPrice) * 100)
     : 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header Navigation */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <Container>
-          <div className="flex items-center justify-between py-4">
-            <button
-              onClick={() => navigate(-1)}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
-            >
-              <FiArrowLeft className="w-5 h-5" />
-              <span>Back</span>
-            </button>
-
-            <div className="flex items-center gap-4">
-              <button
-                onClick={handleShare}
-                className="p-2 text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100"
-              >
-                <FiShare2 className="w-5 h-5" />
-              </button>
-              <button
-                onClick={handleWishlist}
-                className={`p-2 rounded-lg hover:bg-gray-100 ${isWishlisted ? 'text-red-500' : 'text-gray-600 hover:text-gray-900'
-                  }`}
-              >
-                <FiHeart className="w-5 h-5" fill={isWishlisted ? 'currentColor' : 'none'} />
-              </button>
-            </div>
-          </div>
-        </Container>
-      </header>
+      <BlogHeader blog={course} />
 
       <Container className="py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 ">
             {/* Course Header */}
             <div className="bg-white rounded-2xl shadow-sm p-6 mb-6">
-              <div className="flex flex-wrap items-center capitalize gap-2 mb-4">
-                <Badge variant="primary" className={getCategoryColor(course.category)}>
-                  {course.category}
-                </Badge>
-                <Badge variant="secondary" className={getLevelColor(course.level)}>
-                  {getLevelLabel(course.level)}
-                </Badge>
-                {course.badge && (
-                  <Badge variant="success" className={getBadgeColor(course.badge)}>
-                    {getBadgeLabel(course.badge)}
+              <div className='flex items-baseline-last justify-between'>
+                <div className="flex flex-wrap items-center capitalize gap-2 mb-4">
+                  <Badge variant="primary" className={`${getCategoryColor(course.category)}`}>
+                    {course.category}
                   </Badge>
-                )}
-                {course.isFeatured && (
-                  <Badge variant="warning">
-                    <FiStar className="w-3 h-3 mr-1" />
-                    Featured
+                  <div className=' hidden md:block'>
+                    <Badge variant="secondary" className={getLevelColor(course.level)}>
+                    {getLevelLabel(course.level)}
                   </Badge>
-                )}
+                  </div>
+                  {course.badge && (
+                    <Badge variant="success" className={getBadgeColor(course.badge)}>
+                      {getBadgeLabel(course.badge)}
+                    </Badge>
+                  )}
+                  {course.isFeatured && (
+                    <Badge variant="warning">
+                      <FiStar className="w-3 h-3 mr-1" />
+                      Featured
+                    </Badge>
+                  )}
+                </div>
+
+                <div>
+                  <ShareDropdown course={course} />
+                </div>
               </div>
               <div className="aspect-video rounded-lg overflow-hidden mb-4">
                 <img
@@ -188,21 +163,13 @@ const CourseDetailsPage: React.FC = () => {
                 {course.description}
               </p>
 
-              <div className="flex items-center gap-6 flex-wrap">
+              <div className="flex items-center gap-2 flex-wrap">
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-1">
-                    <Rating rating={course.rating} />
-                    <span className="text-sm font-medium text-gray-900 ml-1">
-                      {course.rating}
-                    </span>
-                  </div>
-                  <span className="text-sm text-gray-500">
-                    ({course.reviewCount?.toLocaleString()} reviews)
-                  </span>
+                  <Rating rating={course.rating} reviewCount={course.reviewCount} />
                 </div>
 
                 <div className="flex items-center gap-4 text-sm text-gray-600">
-                  <div className="flex items-center gap-1">
+                  <div className="hidden md:flex items-center gap-1">
                     <FiUsers className="w-4 h-4" />
                     <span>{course.students?.toLocaleString()} students</span>
                   </div>
@@ -227,7 +194,6 @@ const CourseDetailsPage: React.FC = () => {
                   { value: 'overview', label: 'Overview' },
                   { value: 'curriculum', label: 'Curriculum' },
                   { value: 'instructor', label: 'Instructor' },
-                  { value: 'reviews', label: 'Reviews' },
                 ]}
               />
 
@@ -235,7 +201,6 @@ const CourseDetailsPage: React.FC = () => {
                 {activeTab === 'overview' && <OverviewTab course={course} />}
                 {activeTab === 'curriculum' && <CurriculumTab course={course} />}
                 {activeTab === 'instructor' && <InstructorTab course={course} />}
-                {activeTab === 'reviews' && <ReviewsTab course={course} />}
               </div>
             </div>
           </div>
@@ -352,9 +317,15 @@ const CourseDetailsPage: React.FC = () => {
           <section className="mt-16">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl font-bold text-gray-900">Similar Courses</h2>
-              <Button onClick={() => navigate('/courses')}>
-                View All Courses
-              </Button>
+              <div className="text-center  flex justify-center">
+                <Button
+                  className="py-3"
+                  onClick={() => navigate('/courses')}
+                >
+                  <span>View All</span>
+                  <FiArrowRight />
+                </Button>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -546,94 +517,5 @@ const InstructorTab: React.FC<{ course: Course }> = ({ course }) => {
   );
 };
 
-const ReviewsTab: React.FC<{ course: Course }> = ({ course }) => {
-  // Mock reviews data
-  const reviews = [
-    {
-      id: 1,
-      user: "John Doe",
-      rating: 5,
-      date: "2 weeks ago",
-      comment: "Excellent course! The instructor explains complex concepts in a very understandable way.",
-      helpful: 12
-    },
-    {
-      id: 2,
-      user: "Sarah Smith",
-      rating: 4,
-      date: "1 month ago",
-      comment: "Great content and well structured. Would recommend to beginners.",
-      helpful: 8
-    }
-  ];
-
-  const ratingDistribution = [
-    { stars: 5, count: 45, percentage: 75 },
-    { stars: 4, count: 12, percentage: 20 },
-    { stars: 3, count: 2, percentage: 3 },
-    { stars: 2, count: 1, percentage: 2 },
-    { stars: 1, count: 0, percentage: 0 },
-  ];
-
-  return (
-    <div className="space-y-8">
-      {/* Rating Summary */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="text-center">
-          <div className="text-5xl font-bold text-gray-900 mb-2">{course.rating}</div>
-          <Rating rating={course.rating} size="lg" />
-          <div className="text-gray-600 mt-2">Course Rating</div>
-          <div className="text-sm text-gray-500">{course.reviewCount} reviews</div>
-        </div>
-
-        <div className="space-y-2">
-          {ratingDistribution.map((item) => (
-            <div key={item.stars} className="flex items-center gap-3">
-              <div className="flex items-center gap-1 w-16">
-                <span className="text-sm text-gray-600 w-4">{item.stars}</span>
-                <FiStar className="w-4 h-4 text-yellow-400" />
-              </div>
-              <div className="flex-1 bg-gray-200 rounded-full h-2">
-                <div
-                  className="bg-yellow-400 h-2 rounded-full"
-                  style={{ width: `${item.percentage}%` }}
-                />
-              </div>
-              <span className="text-sm text-gray-600 w-8">{item.percentage}%</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Reviews List */}
-      <div className="space-y-6">
-        {reviews.map((review) => (
-          <Card key={review.id} className="p-6 border border-gray-200 shadow-none">
-            <div className="flex items-start justify-between mb-3">
-              <div>
-                <h4 className="font-semibold text-gray-900">{review.user}</h4>
-                <div className="flex items-center gap-2 mt-1">
-                  <Rating rating={review.rating} size="sm" />
-                  <span className="text-sm text-gray-500">{review.date}</span>
-                </div>
-              </div>
-            </div>
-            <p className="text-gray-700 mb-3">{review.comment}</p>
-            <button className="text-sm text-gray-500 hover:text-gray-700">
-              Helpful ({review.helpful})
-            </button>
-          </Card>
-        ))}
-      </div>
-
-      {/* Load More Reviews */}
-      <div className="text-center">
-        <Button variant="outline">
-          Load More Reviews
-        </Button>
-      </div>
-    </div>
-  );
-};
 
 export default CourseDetailsPage;
