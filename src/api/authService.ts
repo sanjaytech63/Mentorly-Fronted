@@ -41,10 +41,3 @@ export const logoutUser = async (): Promise<void> => {
   const response = await api.post('/auth/logout');
   return response.data;
 };
-
-export const createBlogs = async (formData: FormData): Promise<AuthResponse> => {
-  const { data } = await api.post('/blogs/create', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
-  return data;
-};

@@ -9,7 +9,6 @@ export interface TextAreaProps {
   disabled?: boolean;
   error?: string;
   label?: string;
-  required?: boolean;
   className?: string;
   name?: string;
   id?: string;
@@ -31,7 +30,6 @@ const TextArea: React.FC<TextAreaProps> = ({
   disabled = false,
   error,
   label,
-  required = false,
   className = '',
   name,
   id,
@@ -45,7 +43,6 @@ const TextArea: React.FC<TextAreaProps> = ({
   showCharacterCount = false,
   success,
 }) => {
-  const [isFocused, setIsFocused] = useState(false);
   const textareaId = id || name || `textarea-${Math.random().toString(36).substr(2, 9)}`;
 
   const getIcon = () => {
@@ -104,11 +101,8 @@ const TextArea: React.FC<TextAreaProps> = ({
           name={name}
           value={value}
           onChange={handleChange}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
           placeholder={placeholder}
           disabled={disabled}
-          required={required}
           rows={rows}
           maxLength={maxLength}
           className={`

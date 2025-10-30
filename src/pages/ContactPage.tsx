@@ -1,70 +1,108 @@
-import React, { useState } from 'react';
-import { Card, Button, InputField } from '../index';
-import { FaUser } from 'react-icons/fa';
-import TextArea from '../componets/TextArea';
-import { MdMessage } from 'react-icons/md';
+import React, { useState } from "react";
+import { Card, Button, InputField } from "../index";
+import { FaUser } from "react-icons/fa";
+import TextArea from "../componets/TextArea";
+import { handleError, handleSuccess } from "../utils/toastHandler";
+import { contactApi } from "../api/contactService";
+import contactSchema from "../validations/contactSchema";
 
 interface ContactForm {
-  name: string;
+  fullName: string;
   email: string;
-  subject: string;
   message: string;
+}
+
+interface FormErrors {
+  fullName?: string;
+  email?: string;
+  message?: string;
 }
 
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState<ContactForm>({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
+    fullName: "",
+    email: "",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState<FormErrors>({
+    fullName: "",
+    email: "",
+    message: ""
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const contactMethods = [
     {
-      icon: '📧',
-      title: 'Email Us',
-      details: 'sanjaywebdev@gmail.com',
-      description: 'We reply within 24 hours',
+      icon: "📧",
+      title: "Email Us",
+      details: "sanjaywebdev@gmail.com",
+      description: "We reply within 24 hours",
     },
     {
-      icon: '📞',
-      title: 'Call Us',
-      details: '+91-6376024125',
-      description: 'Mon to Fri, 9AM to 6PM',
+      icon: "📞",
+      title: "Call Us",
+      details: "+91-6376024125",
+      description: "Mon to Fri, 9AM to 6PM",
     },
     {
-      icon: '📍',
-      title: 'Visit Us',
-      details: 'Sector 62, Jaipur',
-      description: 'Rajasthan 201309',
+      icon: "📍",
+      title: "Visit Us",
+      details: "Sector 62, Jaipur",
+      description: "Rajasthan 201309",
     },
   ];
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    console.log('Form submitted:', formData);
-    setIsSubmitting(false);
-    setFormData({ name: '', email: '', subject: '', message: '' });
-
-    alert('Thank you for your message! We will get back to you within 24 hours.');
+  const handleChange = (field: string) => (value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field as keyof FormErrors]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
+    }
   };
 
-  const handleChange = (e: any) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      setIsSubmitting(true);
+      setErrors({});
+
+      const { fullName, email, message } = contactSchema.parse(formData);
+
+      const data = await contactApi(
+        fullName,
+        email,
+        message
+      );
+
+      handleSuccess(data?.message || "Message submitted successfully!");
+      setFormData({ fullName: "", email: "", message: "" });
+      setErrors({ fullName: "", email: "", message: "" });
+
+    } catch (err) {
+      if (err instanceof Error && "issues" in err) {
+        const zodError = err as any;
+        const fieldErrors: FormErrors = {};
+
+        if (Array.isArray(zodError.issues)) {
+          zodError.issues.forEach((issue: any) => {
+            if (issue.path?.[0]) fieldErrors[issue.path[0] as keyof FormErrors] = issue.message;
+          });
+        }
+
+        setErrors(fieldErrors);
+      } else {
+        handleError(err);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
       <section className="relative py-26 mt-10 overflow-hidden bg-gradient-to-r from-indigo-600 to-purple-700">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -91,7 +129,7 @@ const ContactPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <Card className=" relative overflow-hidden" hover={true} padding="lg">
+            <Card className="relative overflow-hidden" hover={true} padding="lg">
               <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-bl-full"></div>
 
               <div className="text-center mb-8">
@@ -105,10 +143,11 @@ const ContactPage: React.FC = () => {
                     label="Full Name *"
                     icon={<FaUser className="text-gray-400" />}
                     type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange("fullName")}
                     placeholder="Enter your full name"
+                    error={errors.fullName}
                   />
 
                   <InputField
@@ -116,34 +155,25 @@ const ContactPage: React.FC = () => {
                     type="email"
                     name="email"
                     value={formData.email}
-                    onChange={handleChange}
+                    onChange={handleChange("email")}
                     placeholder="Enter your email"
+                    error={errors.email}
                   />
                 </div>
 
-                <div>
-                  <TextArea
-                    label="Message *"
-                    id="message"
-                    name="message"
-                    required
-                    rows={8}
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Tell us how we can help you..."
-                  />
-                </div>
+                <TextArea
+                  label="Message *"
+                  name="message"
+                  rows={8}
+                  value={formData.message}
+                  onChange={handleChange("message")}
+                  placeholder="Tell us how we can help you..."
+                  error={errors.message}
+                />
 
                 <div className="flex justify-end">
-                  <Button type="submit">
-                    {isSubmitting ? (
-                      <div className="flex items-center justify-center">
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                        Sending...
-                      </div>
-                    ) : (
-                      'Send Message'
-                    )}
+                  <Button isLoading={isSubmitting} type="submit" disabled={isSubmitting}>
+                    Send Message
                   </Button>
                 </div>
               </form>
@@ -181,7 +211,9 @@ const ContactPage: React.FC = () => {
                     <span className="text-2xl">🏢</span>
                     <div>
                       <p className="font-semibold">Mentorly Learning Center</p>
-                      <p className="text-sm">Tech Park, Sector 62, Noida, Uttar Pradesh 201309</p>
+                      <p className="text-sm">
+                        Tech Park, Sector 62, Noida, Uttar Pradesh 201309
+                      </p>
                     </div>
                   </div>
                 </div>
